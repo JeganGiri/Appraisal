@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retail_shop_employee_assessment
+  </title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #eafaf1; /* Light green background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background: #ffffff; /* White card background */
+      border: 1px solid #d4e8d6; /* Light green border */
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .container img {
+      display: block;
+      margin: 0 auto 20px;
+    }
+
+    h2 {
+      color: #2e7d32; /* Dark green color */
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #2e7d32; /* Dark green for labels */
+      margin-bottom: 8px;
+      display: block;
+      text-align: left;
+    }
+
+    select, input, textarea, button {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #c4d9c7;
+      background-color: #f9fcfa;
+      transition: all 0.3s ease-in-out;
+      box-sizing: border-box;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      border-color: #2e7d32;
+      outline: none;
+      box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
+    }
+
+    button {
+      background-color: #2e7d32; /* Green button */
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #1b5e20; /* Darker green on hover */
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+  
+
+</head>
+<body>
+
+  <!-- Branch and Employee Code Selection -->
+  <div class="container" id="branch-employee-container" style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 20px;">
+    <img src="images.png" alt="Giri Logo" style="width: 150px; margin-bottom: 20px;">
+    <h2>Retail Shop Employees Assessment</h2>
+    <h2>Choose Branch</h2>
+    <select id="branch-select" onchange="updateEmployeeCodes()">
+        <option value="" disabled selected>Select a branch</option>
+        <option value="Alwarthirunagar">Alwarthirunagar</option>
+        <option value="Annanagar East">Annanagar East</option>
+        <option value="Annanagar-West">Annanagar-West</option>
+        <option value="Chembur">Chembur</option>
+        <option value="Chrompet">Chrompet</option>
+        <option value="Coimbatore">Coimbatore</option>
+        <option value="Covai - II">Covai - II</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Dombivili">Dombivili</option>
+        <option value="Goregaon">Goregaon</option>
+        <option value="Hosur">Hosur</option>
+        <option value="Jayanagar">Jayanagar</option>
+        <option value="Kanchi Puram">Kanchi Puram</option>
+        <option value="Kanchipuram Old">Kanchipuram Old</option>
+        <option value="Karolbagh">Karolbagh</option>
+        <option value="Kumbakonam">Kumbakonam</option>
+        <option value="Madurai Wt">Madurai Wt</option>
+        <option value="Malkaj Giri">Malkaj Giri</option>
+        <option value="Malleswaram">Malleswaram</option>
+        <option value="Mangadu">Mangadu</option>
+        <option value="Mangadu Showroom">Mangadu Showroom</option>
+        <option value="Mantsr">Mantsr</option>
+        <option value="Matunga">Matunga</option>
+        <option value="Matunga Showroom">Matunga Showroom</option>
+        <option value="Mogappair">Mogappair</option>
+        <option value="Mulund">Mulund</option>
+        <option value="Mylapore">Mylapore</option>
+        <option value="Nanganallur">Nanganallur</option>
+        <option value="Nerul">Nerul</option>
+        <option value="New Delhi">New Delhi</option>
+        <option value="Pallikaranai">Pallikaranai</option>
+        <option value="Pondycs">Pondycs</option>
+        <option value="Salem">Salem</option>
+        <option value="Secunberabad">Secunberabad</option>
+        <option value="Tambaram">Tambaram</option>
+        <option value="Thiruvanmiyur">Thiruvanmiyur</option>
+        <option value="Trichy">Trichy</option>
+        <option value="West Mambalam">West Mambalam</option>
+      </select>
+      
+
+    <h2>Choose Employee Code</h2>
+    <select id="employee-code-select">
+      <option value="" disabled selected>Select an employee code</option>
+    </select>
+
+    <button onclick="proceedToForm()">Submit</button>
+  </div>
+
+  <!-- Appraisal Form -->
+  <div class="container hidden" id="appraisal-form-container">
+    <h2>Appraisal Form</h2>
+    <form id="appraisalForm">
+      <label for="employeeName">Employee Name:</label>
+      <input type="text" id="employeeName" placeholder="Enter Name" required>
+      
+      <label for="employeeCode">Employee Code:</label>
+      <input type="text" id="employeeCodeField" placeholder="Enter Code" readonly>
+      
+      <label for="branchName">Branch Name:</label>
+      <input type="text" id="branchNameField" placeholder="Enter Branch Name" readonly>
+      
+      <label for="assessorName">Assessor Name:</label>
+      <input type="text" id="assessorName" placeholder="Enter Assessor Name" required>
+
+      <!-- Appraisal Questions -->
+      <label>5. Grooming, Safety, Fitness, Presentable:</label>
+      <select id="groomingSafetyFitness">
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+        <option value="5">😁 5 - Excellent</option>
+      </select>
+
+      <label>6. Product & Process Adherence:</label>
+      <select id="productProcessAdherence">
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+        <option value="5">😁 5 - Excellent</option>
+      </select>
+      <label>7. Selling Skills - Able to Convince Customers:</label>
+<select id="sellingSkills" name="sellingSkills">
+    <option value="1">😢 1 - Poor</option>
+    <option value="2">☹️ 2 - Fair</option>
+    <option value="3">😐 3 - Average</option>
+    <option value="4">😊 4 - Good</option>
+    <option value="5">😁 5 - Excellent</option>
+</select>
+
+<label>8. Shares Responsibilities, Willing to Work Beyond Normal Call:</label>
+<select id="sharesResponsibilities" name="sharesResponsibilities">
+    <option value="1">😢 1 - Poor</option>
+    <option value="2">☹️ 2 - Fair</option>
+    <option value="3">😐 3 - Average</option>
+    <option value="4">😊 4 - Good</option>
+    <option value="5">😁 5 - Excellent</option>
+</select>
+
+<label>9. Computer Literacy, Billing Accuracy, Stock Check Accuracy:</label>
+<select id="computerLiteracy" name="computerLiteracy">
+    <option value="1">😢 1 - Poor</option>
+    <option value="2">☹️ 2 - Fair</option>
+    <option value="3">😐 3 - Average</option>
+    <option value="4">😊 4 - Good</option>
+    <option value="5">😁 5 - Excellent</option>
+</select>
+
+<label>10. Flexible, Supportive, and Communicative:</label>
+<select id="flexibilitySupport" name="flexibilitySupport">
+    <option value="1">😢 1 - Poor</option>
+    <option value="2">☹️ 2 - Fair</option>
+    <option value="3">😐 3 - Average</option>
+    <option value="4">😊 4 - Good</option>
+    <option value="5">😁 5 - Excellent</option>
+</select>
+
+      <!-- Add other questions as needed -->
+
+      <label>11. Additional Responsibilities:</label>
+      <textarea placeholder="Provide explanation..."></textarea>
+
+      <button type="submit">Submit Appraisal</button>
+    </form>
+  </div>
+
+  <script>
+  const branchEmployeeCodes = {
+  "Alwarthirunagar": ["1158", "1200", "1205", "1339", "2194", "2196", "2256", "2259", "2261", "2043"],
+  "Annanagar East": [
+    "1180", "1182", "2024", "2152", "2174", "2175", "2176", "2177", "2189", "2191", "2193", "2198", 
+    "2217", "2219", "2238", "2239", "2245", "2247", "2249", "2251", "2260", "2277", "2279", "2284", 
+    "2317", "VR38", "VR53", "1221"
+  ],
+  "Annanagar-West": ["1172", "1493", "1560", "1690", "2288", "2289"],
+  "Chembur": ["1243", "1245", "1655", "2294", "1238"],
+  "Chrompet": ["1664", "1019", "1692"],
+  "Coimbatore": ["1103", "2093", "2302"],
+  "Covai - II": ["1016", "1194", "1597", "1628", "1906", "1909", "1819"],
+  "Delhi": ["1653"],
+  "Dombivili": ["1234", "1236", "1246", "2233"],
+  "Goregaon": ["1694", "2303", "2309", "1217", "1850", "2268", "2269"],
+  "Hosur": ["1898", "1987", "1193"],
+  "Jayanagar": ["1348", "1714", "1760", "1780", "1810", "1894", "2225", "2298", "1270"],
+  "Kanchi Puram": ["1055", "1905", "1134"],
+  "Kanchipuram Old": ["1645"],
+  "Karolbagh": ["1577", "1629", "1755", "2095", "1467"],
+  "Kumbakonam": ["1979", "1981", "1982", "1986", "1991", "1992", "1024"],
+  "Madurai Wt": ["1033", "1109", "1802", "1002"],
+  "Malkaj Giri": ["1660", "1989", "1990", "2088", "2297", "2306", "2310"],
+  "Malleswaram": ["1074", "1075", "1161", "2255", "1402"],
+  "Mangadu": ["VR59", "1140", "2231", "2304"],
+  "Mantsr": ["2017", "2046"],
+  "Matunga": [
+    "1156", "2270", "2271", "2307", "2308", "1131", "1155", "1160", "1237", "1239", "1241", 
+    "1242", "1247", "1359", "1373", "1452", "1701", "1848", "1849", "1947", "1955", "2064", 
+    "2234", "2236", "2290", "2293", "VR57", "1235"
+  ],
+  "Mogappair": ["1049", "1973", "2042"],
+  "Mulund": ["1355", "1357", "1843", "1846", "2147"],
+  "Mylapore": [
+    "1001", "1003", "1026", "1029", "1041", "1047", "1057", "1067", "1070", "1071", "1072", 
+    "1083", "1102", "1112", "1121", "1122", "1136", "1137", "1176", "1188", "1191", "1229", 
+    "1256", "1259", "1345", "1395", "1478", "1482", "1491", "1502", "1504", "1510", "1514", 
+    "1599", "1646", "1648", "1649", "1658", "1659", "1662", "1667", "1744", "1745", "1774", 
+    "1875", "1920", "1971", "2202", "2224", "2226", "2228", "2232", "2244", "2246", "2265", 
+    "2267", "2275", "2285", "2296", "VR33", "2070"
+  ],
+  "Nanganallur": ["1063", "1056", "1513", "1736", "2061", "2170", "2171"],
+  "Nerul": ["1362", "2235", "VR09"],
+  "New Delhi": ["1640", "1641", "1722", "2078", "2213", "1171"],
+  "Pallikaranai": [
+    "2264", "1068", "1133", "1368", "1793", "1794", "1795", "1796", "1797", "1798", 
+    "1806", "1815", "1941", "1942", "1008", "1812"
+  ],
+  "Pondycs": ["1076", "1393", "2013", "1511"],
+  "Salem": ["1566", "2083", "2085", "2087", "2089", "2316", "2319", "2091"],
+  "Secunberabad": ["1021", "1044", "1069", "1263", "1497", "2029", "VR66", "1013", "1661"],
+  "Tambaram": ["1089", "1116", "1183", "1422", "1495", "1642", "2186", "1952"],
+  "Thiruvanmiyur": ["1065", "1087", "1101", "1369", "1492", "2080", "2229"],
+  "Trichy": ["1037", "1139", "1872", "2220", "1043"],
+  "West Mambalam": ["1081", "1583", "1867", "1907", "1940", "1994", "2103", "2106", "2169", "2195", "2311", "2312", "2315", "2044"]
+};
+
+
+function updateEmployeeCodes() {
+      const branch = document.getElementById("branch-select").value;
+      const employeeCodeSelect = document.getElementById("employee-code-select");
+      employeeCodeSelect.innerHTML = '<option value="" disabled selected>Select an employee code</option>';
+  
+      if (branch && branchEmployeeCodes[branch]) {
+        branchEmployeeCodes[branch].forEach(code => {
+          const option = document.createElement("option");
+          option.value = code;
+          option.textContent = code;
+          employeeCodeSelect.appendChild(option);
+        });
+      }
+    }
+  
+    function proceedToForm() {
+      const branch = document.getElementById("branch-select").value;
+      const employeeCode = document.getElementById("employee-code-select").value;
+  
+      if (!branch || !employeeCode) {
+        alert("Please select both a branch and an employee code.");
+        return;
+      }
+  
+      document.getElementById("branch-employee-container").style.display = "none";
+      document.getElementById("appraisal-form-container").style.display = "block";
+      document.getElementById("branchNameField").value = branch;
+      document.getElementById("employeeCodeField").value = employeeCode;
+    }
+  
+    document.getElementById('appraisalForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+  
+      const formData = new URLSearchParams();
+      formData.append('employeeName', document.getElementById('employeeName').value);
+      formData.append('employeeCode', document.getElementById('employeeCodeField').value);
+      formData.append('branchName', document.getElementById('branchNameField').value);
+      formData.append('assessorName', document.getElementById('assessorName').value);
+      formData.append('groomingSafetyFitness', document.getElementById('groomingSafetyFitness').value);
+      formData.append('productProcessAdherence', document.getElementById('productProcessAdherence').value);
+      formData.append('sellingSkills', document.getElementById('sellingSkills').value);
+      formData.append('sharesResponsibilities', document.getElementById('sharesResponsibilities').value);
+      formData.append('computerLiteracy', document.getElementById('computerLiteracy').value);
+      formData.append('flexibilitySupport', document.getElementById('flexibilitySupport').value);
+      formData.append('additionalResponsibilities', document.querySelector('textarea').value);
+  
+      fetch('https://script.google.com/macros/s/AKfycbzTpLgHlMbOUmacy1UQ-qLxrtZ_vJXyf_XNa4Dct7sL7mgO13AzIzJpt3xbRHmbjdqX/exec', {
+        method: 'POST',
+        body: formData.toString(),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            alert('Form submitted successfully!');
+            document.getElementById("appraisalForm").reset();
+            document.getElementById("branch-employee-container").style.display = "flex";
+            document.getElementById("appraisal-form-container").style.display = "none";
+            document.getElementById("branch-select").value = "";
+            document.getElementById("employee-code-select").innerHTML = '<option value="" disabled selected>Select an employee code</option>';
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');
+        });
+    });
+  </script>
+</body>
+</html>

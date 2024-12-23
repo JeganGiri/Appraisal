@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Appraisal</title>
+    <style>
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #e0f8e9, #a0e6b5);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h2 {
+    color: #2e7d32;
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.tab {
+    text-align: center;
+    padding: 18px 10px;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(to right, #43a047, #2e7d32);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #1b5e20;
+    transition: all 0.3s ease-in-out;
+}
+
+.tab:hover {
+    background: linear-gradient(to right, #2e7d32, #1b5e20);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tab.active {
+    background: linear-gradient(to right, #1b5e20, #0d4d14);
+    transform: scale(1.03);
+}
+
+.content {
+    display: none;
+    padding: 30px;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 600px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.content.active {
+    display: block;
+}
+
+.popup, .overlay {
+    display: none;
+}
+
+.popup.active, .overlay.active {
+    display: block;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(to bottom, #e0f8e9, #ffffff);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    text-align: center;
+    width: 90%;
+    max-width: 1000px;
+}
+
+.popup h3 {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    color: #2e7d32;
+}
+
+.popup input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #43a047;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: all 0.3s ease-in-out;
+}
+
+.popup input:focus {
+    border-color: #2e7d32;
+    outline: none;
+    box-shadow: 0 0 8px rgba(67, 160, 71, 0.5);
+}
+
+.popup button {
+    padding: 12px 20px;
+    background: linear-gradient(to right, #43a047, #2e7d32);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
+.popup button:hover {
+    background: linear-gradient(to right, #2e7d32, #1b5e20);
+    transform: scale(1.05);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+}
+
+.employee-details p {
+    margin: 8px 0;
+    font-size: 1.1em;
+    color: #333;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tab {
+        padding: 12px;
+        font-size: 0.9em;
+    }
+
+    .content {
+        padding: 20px;
+        margin: 10px auto;
+    }
+
+    .popup {
+        padding: 15px;
+        max-width: 90%;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    .tab {
+        padding: 10px;
+        font-size: 0.8em;
+    }
+
+    .content {
+        padding: 15px;
+        font-size: 0.9em;
+    }
+
+    .popup h3 {
+        font-size: 1em;
+    }
+
+    .popup input, .popup button {
+        font-size: 0.9em;
+    }
+
+    h2 {
+        font-size: 1.3em;
+    }
+}
+     
+
+
+
+    </style>
+</head>
+<body>
+    <img src="images.png" alt="Giri Logo" style="width: 150px; margin-bottom: 20px;">
+   
+    <div class="tabs">
+        <div class="tab" onclick="showPopup(0)">Performance Appraisal</div>
+       
+    </div>
+
+    <div id="content-0" class="content">
+        <h2>Performance Appraisal</h2>
+        <div id="employee-details-0"></div>
+    </div>
+
+   
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="popup" id="popup">
+        <h3>Enter Employee Code</h3>
+        <input type="text" id="employeeCode" placeholder="Employee Code" />
+        <button onclick="submitCode()">Submit</button>
+    </div>
+
+    <script>
+       const employeeData = {
+    "1105": { "name": "ANURADHA P V", "paygroup": "PF", "classification": "Office", "department": "Accounts", "doj": "01-Dec-2016", "reviewer": "GANESH KUMAR" },
+    "1119": { "name": "ESACKIDURAI NATARAJAN", "paygroup": "PF", "classification": "Office", "department": "Accounts", "doj": "02-May-2018", "reviewer": "GANESH KUMAR" },
+    "1199": { "name": "P MUTHUMANIKANDAN", "paygroup": "PF", "classification": "Office", "department": "Accounts", "doj": "01-Dec-2020", "reviewer": "GANESH KUMAR" },
+    "1323": { "name": "RUTHRESH G", "paygroup": "PF", "classification": "Office", "department": "Accounts", "doj": "01-Sep-2021", "reviewer": "GANESH KUMAR" },
+    "1415": { "name": "SATHISH R", "paygroup": "PF", "classification": "Office", "department": "Accounts", "doj": "10-Jan-2022", "reviewer": "GANESH KUMAR" },
+    "1600": { "name": "MAGESWARAN.N", "paygroup": "PF", "classification": "Office", "department": "Accounts", "doj": "04-Aug-2022", "reviewer": "GANESH KUMAR" },
+    "1932": { "name": "E SIVAGAMI", "paygroup": "PF", "classification": "Office", "department": "Accounts", "doj": "13-Sep-2023", "reviewer": "GANESH KUMAR" },
+    "1983": { "name": "ABINAYA R", "paygroup": "PF", "classification": "Office", "department": "Accounts", "doj": "07-Dec-2023", "reviewer": "GANESH KUMAR" },
+    "2030": { "name": "CHANDRA MOHAN N", "paygroup": "PF", "classification": "Office", "department": "Accounts", "doj": "04-Mar-2024", "reviewer": "GANESH KUMAR" },
+    "2031": { "name": "ABEL ANDREW R", "paygroup": "PF", "classification": "Office", "department": "Accounts", "doj": "04-Mar-2024", "reviewer": "GANESH KUMAR" },
+    "2166": { "name": "BHUVANESHWARAN.S", "paygroup": "PF", "classification": "Office", "department": "Accounts", "doj": "01-Jul-2024", "reviewer": "GANESH KUMAR" },
+    "2281": { "name": "R DIVYA BHARATHI", "paygroup": "PF", "classification": "Office", "department": "ADMIN", "doj": "14-Oct-2024", "reviewer": "GAYATHRI S" },
+    "1581": { "name": "ANTONY EZHILARASI", "paygroup": "PF", "classification": "Office", "department": "ADMIN", "doj": "18-Jul-2022", "reviewer": "GAYATHRI S" },
+    "1107": { "name": "THANGARAJ S", "paygroup": "PF", "classification": "Office", "department": "ADMIN", "doj": "01-Feb-2017", "reviewer": "E.BALA" },
+    "2314": { "name": "V ABISHEK", "paygroup": "PF", "classification": "Office", "department": "ADVERTISEMENT AND BRANDING", "doj": "01-Nov-2024", "reviewer": "ARUNKUMAR VENKATESAN" },
+    "1885": { "name": "NANTHINI THIRUMAL MURUGAN", "paygroup": "PF", "classification": "Office", "department": "ADVERTISEMENT AND BRANDING", "doj": "11-Jul-2023", "reviewer": "ARUNKUMAR VENKATESAN" },
+    "1196": { "name": "ARUNKUMAR VENKATESAN", "paygroup": "PF", "classification": "Office", "department": "ADVERTISEMENT AND BRANDING", "doj": "01-Dec-2020", "reviewer": "T.S.RANGANATHAN" },
+    "1158": { "name": "KAVITHA R", "paygroup": "PF", "classification": "Retail", "department": "Alwarthirunagar", "doj": "14-Oct-2019", "reviewer": "SURAJ" },
+    "1200": { "name": "SANTHOSHI", "paygroup": "PF", "classification": "Retail", "department": "Alwarthirunagar", "doj": "05-Dec-2020", "reviewer": "SURAJ" },
+    "1205": { "name": "SATHISH M", "paygroup": "PF", "classification": "Retail", "department": "Alwarthirunagar", "doj": "01-Jan-2021", "reviewer": "SURAJ" },
+    "1339": { "name": "THULASI.S", "paygroup": "PF", "classification": "Retail", "department": "Alwarthirunagar", "doj": "02-Sep-2020", "reviewer": "SURAJ" },
+    "2194": { "name": "SAIKUMAR RAJENDRAN", "paygroup": "PF", "classification": "Retail", "department": "Alwarthirunagar", "doj": "16-Jul-2024", "reviewer": "SURAJ" },
+    "2196": { "name": "ANANDH KAMALAKANTHAN", "paygroup": "PF", "classification": "Retail", "department": "Alwarthirunagar", "doj": "22-Jul-2024", "reviewer": "SURAJ" },
+    "2256": { "name": "SOWMIYA", "paygroup": "PF", "classification": "Retail", "department": "Alwarthirunagar", "doj": "11-Sep-2024", "reviewer": "SURAJ" },
+    "2259": { "name": "DHANALAKSHMI", "paygroup": "PF", "classification": "Retail", "department": "Alwarthirunagar", "doj": "14-Sep-2024", "reviewer": "SURAJ" },
+    "2261": { "name": "BHAVANI MURUGAN", "paygroup": "PF", "classification": "Retail", "department": "Alwarthirunagar", "doj": "16-Sep-2024", "reviewer": "SURAJ" },
+    "2043": { "name": "SURAJ", "paygroup": "PF", "classification": "Retail", "department": "Alwarthirunagar", "doj": "11-Mar-2024", "reviewer": "AMARGIRISH" },
+    "1011": { "name": "KAMAL PREMNATH R", "paygroup": "PF", "classification": "Warehouse", "department": "Amazon", "doj": "01-Apr-2006", "reviewer": "VIGNESWAR D" },
+    "1061": { "name": "MUNEESWARAN K", "paygroup": "PF", "classification": "Warehouse", "department": "Amazon", "doj": "01-Apr-2015", "reviewer": "VIGNESWAR D" },
+    "1290": { "name": "KARTHICK. G", "paygroup": "PF", "classification": "Warehouse", "department": "Amazon", "doj": "01-Apr-2021", "reviewer": "VIGNESWAR D" },
+    "1409": { "name": "VIGNESWAR D", "paygroup": "PF", "classification": "Warehouse", "department": "Amazon", "doj": "17-Jan-2022", "reviewer": "VIGNESWAR D" },
+    "1671": { "name": "JEYALAKSHMI P R", "paygroup": "PF", "classification": "Warehouse", "department": "Amazon", "doj": "01-Oct-2022", "reviewer": "VIGNESWAR D" },
+    "1788": { "name": "N MOHAMED ARFITH", "paygroup": "PF", "classification": "Warehouse", "department": "Amazon", "doj": "06-Apr-2023", "reviewer": "VIGNESWAR D" },
+    "1929": { "name": "DILIP SRIKANTH", "paygroup": "PF", "classification": "Warehouse", "department": "Amazon", "doj": "01-Sep-2023", "reviewer": "VIGNESWAR D" },
+    "2262": { "name": "DANISH NAGARAJAN", "paygroup": "PF", "classification": "Warehouse", "department": "Amazon", "doj": "18-Sep-2024", "reviewer": "VIGNESWAR D" },
+    "1573": { "name": "EKAMBARAM  DEVARAJ", "paygroup": "PF", "classification": "Warehouse", "department": "Amazon", "doj": "12-Jul-2022", "reviewer": "ABHISHEK PRAKASH" },
+    "1180": { "name": "LAKSHMIPRIYA V", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "01-Feb-2020", "reviewer": "SRINIVASAN G" },
+    "1182": { "name": "RANJITH S", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "01-Feb-2020", "reviewer": "SRINIVASAN G" },
+    "2024": { "name": "SUNIL", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "15-Feb-2024", "reviewer": "SRINIVASAN G" },
+    "2152": { "name": "E DHANALAKSHMI", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "17-Jun-2024", "reviewer": "SRINIVASAN G" },
+    "2174": { "name": "MANI KANDAN.S", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "02-Jul-2024", "reviewer": "SRINIVASAN G" },
+    "2175": { "name": "SANGEETHA NAGARAJAN", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "01-Jul-2024", "reviewer": "SRINIVASAN G" },
+    "2176": { "name": "MURASOLIMARAN.M", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "01-Jul-2024", "reviewer": "SRINIVASAN G" },
+    "2177": { "name": "RAKSHITHA.K", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "01-Jul-2024", "reviewer": "SRINIVASAN G" },
+    "2189": { "name": "KIRUBAKARAN", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "13-Jul-2024", "reviewer": "SRINIVASAN G" },
+    "2191": { "name": "SATHISH KUMAR C", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "10-Jul-2024", "reviewer": "SRINIVASAN G" },
+    "2193": { "name": "SELVI.V", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "11-Jul-2024", "reviewer": "SRINIVASAN G" },
+    "2198": { "name": "HARIBASKAR.M", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "02-Jul-2024", "reviewer": "SRINIVASAN G" },
+    "2217": { "name": "PRABAVATHY M", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "07-Aug-2024", "reviewer": "SRINIVASAN G" },
+    "2219": { "name": "VIKRAM J", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "06-Aug-2024", "reviewer": "SRINIVASAN G" },
+    "2238": { "name": "VISHVA E", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "25-Aug-2024", "reviewer": "SRINIVASAN G" },
+    "2239": { "name": "RANJEETHA", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "20-Aug-2024", "reviewer": "SRINIVASAN G" },
+    "2245": { "name": "DHIVYADHARSHINI P", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "03-Sep-2024", "reviewer": "SRINIVASAN G" },
+    "2247": { "name": "SADHANA P", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "03-Sep-2024", "reviewer": "SRINIVASAN G" },
+    "2249": { "name": "DEVIKA", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "09-Sep-2024", "reviewer": "SRINIVASAN G" },
+    "2251": { "name": "UMARANI M", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "09-Sep-2024", "reviewer": "SRINIVASAN G" },
+    "2260": { "name": "HARI PRIYA", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "16-Sep-2024", "reviewer": "SRINIVASAN G" },
+    "2277": { "name": "RUKMANI", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "11-Oct-2024", "reviewer": "SRINIVASAN G" },
+    "2279": { "name": "ARUN EMMANUEL", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "07-Oct-2024", "reviewer": "SRINIVASAN G" },
+    "2284": { "name": "BABY SHALINI", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "03-Oct-2024", "reviewer": "SRINIVASAN G" },
+    "2317": { "name": "V MAHALAKSHMI", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "01-Nov-2024", "reviewer": "SRINIVASAN G" },
+    "VR38": { "name": "SABARI", "paygroup": "Voucher", "classification": "Retail", "department": "Annanagar East", "doj": "24-Sep-2024", "reviewer": "SRINIVASAN G" },
+    "VR53": { "name": "NETHRA", "paygroup": "Voucher", "classification": "Retail", "department": "Annanagar East", "doj": "10-Jan-2024", "reviewer": "SRINIVASAN G" },
+    "1221": { "name": "SRINIVASAN G", "paygroup": "PF", "classification": "Retail", "department": "Annanagar East", "doj": "01-Feb-2021", "reviewer": "AMARGIRISH" },
+    "1172": { "name": "EZHILARASAN U", "paygroup": "PF", "classification": "Retail", "department": "Annanagar-West", "doj": "03-Dec-2019", "reviewer": "AMARGIRISH" },
+    "1493": { "name": "GANESAN", "paygroup": "PF", "classification": "Retail", "department": "Annanagar-West", "doj": "11-May-2022", "reviewer": "EZHILARASAN U" },
+    "1560": { "name": "UMA MAGESWARI BALAKRISHNAN", "paygroup": "PF", "classification": "Retail", "department": "Annanagar-West", "doj": "04-Jun-2022", "reviewer": "EZHILARASAN U" },
+    "1690": { "name": "MANIMEGALAI", "paygroup": "PF", "classification": "Retail", "department": "Annanagar-West", "doj": "08-Nov-2022", "reviewer": "EZHILARASAN U" },
+    "2288": { "name": "ARASU RAMAN", "paygroup": "PF", "classification": "Retail", "department": "Annanagar-West", "doj": "16-Oct-2024", "reviewer": "EZHILARASAN U" },
+    "2289": { "name": "BHUVANEHWARI PRAKASAM", "paygroup": "PF", "classification": "Retail", "department": "Annanagar-West", "doj": "16-Oct-2024", "reviewer": "EZHILARASAN U" },
+    "1682": { "name": "A L V MOORTHY", "paygroup": "Retainers", "classification": "Office", "department": "CALL CENTER", "doj": "01-Nov-2022", "reviewer": "PRIYANKA DESHMUKH" },
+    "1399": { "name": "SUTHA M", "paygroup": "PF", "classification": "Office", "department": "Catalog Management", "doj": "27-Dec-2021", "reviewer": "ARJUN S" },
+    "1637": { "name": "KOKILA.T", "paygroup": "PF", "classification": "Office", "department": "Catalog Management", "doj": "08-Sep-2022", "reviewer": "ARJUN S" },
+    "2132": { "name": "KANISHKHA N", "paygroup": "PF", "classification": "Office", "department": "Catalog Management", "doj": "01-Jun-2024", "reviewer": "ARJUN S" },
+    "1666": { "name": "ARJUN S", "paygroup": "PF", "classification": "Office", "department": "Catalog Management", "doj": "05-Oct-2022", "reviewer": "ABHISHEK PRAKASH" },
+    "1243": { "name": "VINOLA MARY G", "paygroup": "PF", "classification": "Retail", "department": "Chembur", "doj": "01-Apr-2021", "reviewer": "RAJA  R" },
+    "1245": { "name": "PUSHPALATHA S", "paygroup": "PF", "classification": "Retail", "department": "Chembur", "doj": "01-Apr-2021", "reviewer": "RAJA  R" },
+    "1655": { "name": "Arokiamary", "paygroup": "Retainers", "classification": "Retail", "department": "Chembur", "doj": "01-Apr-2022", "reviewer": "RAJA  R" },
+    "2294": { "name": "VARUN KASIVISWANATHAN", "paygroup": "PF", "classification": "Retail", "department": "Chembur", "doj": "01-Oct-2024", "reviewer": "RAJA  R" },
+    "1238": { "name": "RAJA  R", "paygroup": "PF", "classification": "Retail", "department": "Chembur", "doj": "01-Apr-2021", "reviewer": "C.VENKATESH" },
+    "1730": { "name": "RAMYA P", "paygroup": "PF", "classification": "Warehouse", "department": "Chennaiwarehouse", "doj": "15-Feb-2023", "reviewer": "JAGADISH BABU" },
+    "1961": { "name": "P. RAGINI", "paygroup": "PF", "classification": "Warehouse", "department": "Chennaiwarehouse", "doj": "25-Oct-2023", "reviewer": "JAGADISH BABU" },
+    "2242": { "name": "GNANAMBAL R", "paygroup": "PF", "classification": "Warehouse", "department": "Chennaiwarehouse", "doj": "02-Sep-2024", "reviewer": "JAGADISH BABU" },
+    "2243": { "name": "UMA MAGESHWARI ANANDHAN", "paygroup": "PF", "classification": "Warehouse", "department": "Chennaiwarehouse", "doj": "01-Sep-2024", "reviewer": "JAGADISH BABU" },
+    "2250": { "name": "SARANYA D", "paygroup": "PF", "classification": "Warehouse", "department": "Chennaiwarehouse", "doj": "06-Sep-2024", "reviewer": "JAGADISH BABU" },
+    "2252": { "name": "SEETHA M", "paygroup": "PF", "classification": "Warehouse", "department": "Chennaiwarehouse", "doj": "11-Sep-2024", "reviewer": "JAGADISH BABU" },
+    "1664": { "name": "KUTDRALESHWARAN NITHYAANDAN", "paygroup": "PF", "classification": "Retail", "department": "Chrompet", "doj": "09-Sep-2022", "reviewer": "VAIDEESHWARAN V" },
+    "1019": { "name": "VAIDEESHWARAN V", "paygroup": "PF", "classification": "Retail", "department": "Chrompet", "doj": "01-Apr-2008", "reviewer": "AMARGIRISH" },
+    "1103": { "name": "SULOCHANA P", "paygroup": "PF", "classification": "Retail", "department": "Coimbatore", "doj": "01-Dec-2016", "reviewer": "SABARINATHAN ANNAMALAI" },
+    "2093": { "name": "NALINA ANUSHA", "paygroup": "PF", "classification": "Retail", "department": "Coimbatore", "doj": "01-May-2024", "reviewer": "SABARINATHAN ANNAMALAI" },
+    "2302": { "name": "M BALAMURUGAN", "paygroup": "NPF", "classification": "Retail", "department": "COIMBATORE", "doj": "14-Nov-2024", "reviewer": "SABARINATHAN ANNAMALAI" },
+    "1168": { "name": "KIRTHIGA P", "paygroup": "PF", "classification": "Office", "department": "Content", "doj": "01-Dec-2019", "reviewer": "ABHISHEK PRAKASH" },
+    "1016": { "name": "SELVARANI  K", "paygroup": "PF", "classification": "Retail", "department": "Covai - II", "doj": "01-Oct-2007", "reviewer": "SABARINATHAN ANNAMALAI" },
+    "1194": { "name": "MALLIGA R", "paygroup": "PF", "classification": "Retail", "department": "Covai - II", "doj": "19-Nov-2020", "reviewer": "SABARINATHAN ANNAMALAI" },
+    "1597": { "name": "NAGAMMAL JOHN", "paygroup": "PF", "classification": "Retail", "department": "Covai - II", "doj": "01-Aug-2022", "reviewer": "SABARINATHAN ANNAMALAI" },
+    "1628": { "name": "MAGESWARI ARUMUGAM", "paygroup": "PF", "classification": "Retail", "department": "Covai - II", "doj": "09-Aug-2022", "reviewer": "SABARINATHAN ANNAMALAI" },
+    "1906": { "name": "MOHANAPRIYA K", "paygroup": "PF", "classification": "Retail", "department": "Covai - II", "doj": "04-Aug-2023", "reviewer": "SABARINATHAN ANNAMALAI" },
+    "1909": { "name": "SARASWATHI SUBRAMANIYAM", "paygroup": "PF", "classification": "Retail", "department": "Covai - II", "doj": "02-Aug-2023", "reviewer": "SABARINATHAN ANNAMALAI" },
+    "1819": { "name": "SABARINATHAN ANNAMALAI", "paygroup": "PF", "classification": "Retail", "department": "Covai - II", "doj": "28-Apr-2023", "reviewer": "AMARGIRISH" },
+    "1692": { "name": "KAMALA KANTHA KUMAR D.R.", "paygroup": "Retainers", "classification": "Retail", "department": "CROMPET", "doj": "05-Nov-2022", "reviewer": "VAIDEESHWARAN V" },
+    "1653": { "name": "SUNI JENA", "paygroup": "Retainers", "classification": "Retail", "department": "DELHI", "doj": "01-Apr-2022", "reviewer": "SENTHILMURUGAN A" },
+    "1046": { "name": "VIJAYA BASKARAN R", "paygroup": "PF", "classification": "Office", "department": "DESPATCH", "doj": "01-Aug-2012", "reviewer": "JAGADISH BABU" },
+    "1080": { "name": "SAKTHIVEL D", "paygroup": "PF", "classification": "Office", "department": "DESPATCH", "doj": "01-Jun-2016", "reviewer": "JAGADISH BABU" },
+    "1110": { "name": "JAYASURIYA A", "paygroup": "PF", "classification": "Office", "department": "DESPATCH", "doj": "01-Aug-2017", "reviewer": "JAGADISH BABU" },
+    "1114": { "name": "SATHISH S", "paygroup": "PF", "classification": "Office", "department": "DESPATCH", "doj": "17-Aug-2017", "reviewer": "JAGADISH BABU" },
+    "1408": { "name": "KALAIARASI M", "paygroup": "PF", "classification": "Office", "department": "Content", "doj": "04-Jan-2022", "reviewer": "KIRTHIGA P" },
+    "2050": { "name": "NISHA NEELAGANDAN", "paygroup": "PF", "classification": "Office", "department": "Content", "doj": "11-Mar-2024", "reviewer": "KIRTHIGA P" },
+    "2130": { "name": "SWETHA R", "paygroup": "PF", "classification": "Office", "department": "Digital Content Production", "doj": "01-May-2024", "reviewer": "CHITHIRAIKUMAR M" },
+    "2139": { "name": "ESWARI A", "paygroup": "PF", "classification": "Office", "department": "Content", "doj": "10-Jun-2024", "reviewer": "KIRTHIGA P" },
+    "2181": { "name": "MANOJ", "paygroup": "PF", "classification": "Office", "department": "Content", "doj": "12-Jul-2024", "reviewer": "KIRTHIGA P" },
+    "2199": { "name": "YOKESH S", "paygroup": "PF", "classification": "Office", "department": "Content", "doj": "22-Jul-2024", "reviewer": "KIRTHIGA P" },
+    "1208": { "name": "DHAKSNA MOORTHY S", "paygroup": "PF", "classification": "Office", "department": "Graphic Designing & Editing", "doj": "01-Jan-2021", "reviewer": "POOBALAN.R" },
+    "1476": { "name": "RANGANATHAN MANIVANNAN", "paygroup": "PF", "classification": "Office", "department": "Graphic Designing & Editing", "doj": "05-Apr-2022", "reviewer": "POOBALAN.R" },
+    "1594": { "name": "NANDHAKUMAR M", "paygroup": "PF", "classification": "Office", "department": "Tick", "doj": "05-Aug-2022", "reviewer": "POOBALAN.R" },
+    "1595": { "name": "BALAJI", "paygroup": "PF", "classification": "Office", "department": "Tick", "doj": "05-Aug-2022", "reviewer": "POOBALAN.R" },
+    "1778": { "name": "YOGESHWARAN SANKAR", "paygroup": "PF", "classification": "Office", "department": "Graphic Designing & Editing", "doj": "13-Mar-2023", "reviewer": "POOBALAN.R" },
+    "2011": { "name": "PRADEEP DURAI", "paygroup": "PF", "classification": "Office", "department": "Graphic Designing & Editing", "doj": "05-Feb-2024", "reviewer": "POOBALAN.R" },
+    "2060": { "name": "DINESH T", "paygroup": "PF", "classification": "Office", "department": "Graphic Designing & Editing", "doj": "12-Mar-2024", "reviewer": "POOBALAN.R" },
+    "2071": { "name": "SRIDHAR KATHIRVEL", "paygroup": "PF", "classification": "Office", "department": "Graphic Designing & Editing", "doj": "02-Apr-2024", "reviewer": "POOBALAN.R" },
+    "2097": { "name": "JAYANTHI B", "paygroup": "PF", "classification": "Office", "department": "Graphic Designing & Editing", "doj": "09-May-2024", "reviewer": "POOBALAN.R" },
+    "1565": { "name": "PRASANNA D", "paygroup": "PF", "classification": "Office", "department": "Digital Content Production", "doj": "01-Jul-2022", "reviewer": "CHITHIRAIKUMAR M" },
+    "1613": { "name": "Sathiyanarayanan Saravanan", "paygroup": "PF", "classification": "Office", "department": "Digital Content Production", "doj": "10-Aug-2022", "reviewer": "CHITHIRAIKUMAR M" },
+    "1765": { "name": "BHAVANMANI KARTHIGAI PRAKASH", "paygroup": "PF", "classification": "Office", "department": "Digital Content Production", "doj": "01-Mar-2023", "reviewer": "CHITHIRAIKUMAR M" },
+    "1967": { "name": "SHIVANI", "paygroup": "PF", "classification": "Office", "department": "Digital Content Production", "doj": "14-Nov-2023", "reviewer": "CHITHIRAIKUMAR M" },
+    "2025": { "name": "MERLIN ALBERT", "paygroup": "PF", "classification": "Office", "department": "Digital Content Production", "doj": "01-Feb-2024", "reviewer": "CHITHIRAIKUMAR M" },
+    "2118": { "name": "AKASH R", "paygroup": "PF", "classification": "Office", "department": "Digital Content Production", "doj": "20-May-2024", "reviewer": "CHITHIRAIKUMAR M" },
+    "2140": { "name": "PASUPATHI S", "paygroup": "PF", "classification": "Office", "department": "Digital Content Production", "doj": "11-Jun-2024", "reviewer": "CHITHIRAIKUMAR M" },
+    "2054": { "name": "MITHRAN R", "paygroup": "PF", "classification": "Office", "department": "Tick-Business Development & Crm", "doj": "01-Mar-2024", "reviewer": "SAKTHIVEL NAGARAJ" },
+    "1858": { "name": "SUBASHINI DEVENDRAN", "paygroup": "PF", "classification": "Office", "department": "SEO", "doj": "08-Jun-2023", "reviewer": "VIGNESH R" },
+    "2069": { "name": "HARIHARAN V", "paygroup": "PF", "classification": "Office", "department": "SEO", "doj": "01-Apr-2024", "reviewer": "VIGNESH R" },
+    "2098": { "name": "RAGUPATHI R", "paygroup": "PF", "classification": "Office", "department": "SEO", "doj": "01-May-2024", "reviewer": "VIGNESH R" },
+    "1886": { "name": "PRIYADHARSHINI S", "paygroup": "PF", "classification": "Office", "department": "SMO", "doj": "11-Jul-2023", "reviewer": "M.KARTHIKEYAN" },
+    "2021": { "name": "KAVIYARASAN", "paygroup": "PF", "classification": "Office", "department": "SMO", "doj": "22-Feb-2024", "reviewer": "M.KARTHIKEYAN" },
+    "2241": { "name": "KEERTHANA KANTHAM S", "paygroup": "PF", "classification": "Office", "department": "SMO", "doj": "01-Sep-2024", "reviewer": "M.KARTHIKEYAN" },
+    "VR44": { "name": "SAMUKTHA DEVI", "paygroup": "Voucher", "classification": "Office", "department": "SMO", "doj": "01-Sep-2024", "reviewer": "M.KARTHIKEYAN" },
+    "VR50": { "name": "YUVARAJ", "paygroup": "INTERN", "classification": "Office", "department": "SMO", "doj": "10-Jul-2024", "reviewer": "M.KARTHIKEYAN" },
+    "VR51": { "name": "VENNILA", "paygroup": "INTERN", "classification": "Office", "department": "SEO", "doj": "10-Sep-2024", "reviewer": "M.KARTHIKEYAN" },
+    "1343": { "name": "POOBALAN.R", "paygroup": "PF", "classification": "Office", "department": "Graphic Designing & Editing", "doj": "02-Aug-2021", "reviewer": "ABHISHEK PRAKASH" },
+    "1674": { "name": "CHITHIRAIKUMAR M", "paygroup": "PF", "classification": "Office", "department": "Digital Content Production", "doj": "13-Oct-2022", "reviewer": "ABHISHEK PRAKASH" },
+    "2005": { "name": "SAKTHIVEL NAGARAJ", "paygroup": "PF", "classification": "Office", "department": "Tick-Business Development", "doj": "05-Jan-2024", "reviewer": "ABHISHEK PRAKASH" },
+    "2056": { "name": "VIGNESH R", "paygroup": "PF", "classification": "Office", "department": "SEO", "doj": "20-Mar-2024", "reviewer": "ABHISHEK PRAKASH" },
+    "2205": { "name": "M.KARTHIKEYAN", "paygroup": "PF", "classification": "Office", "department": "SMO", "doj": "22-Jul-2024", "reviewer": "ABHISHEK PRAKASH" },
+    "2272": { "name": "VAISHNAVI", "paygroup": "PF", "classification": "Office", "department": "Tick-Business Development & Crm", "doj": "01-Oct-2024", "reviewer": "SAKTHIVEL NAGARAJ" },
+    "1059": { "name": "SUDHARSAN V", "paygroup": "PF", "classification": "Office", "department": "Digital Content Production", "doj": "01-Jul-2014", "reviewer": "CHITHIRAIKUMAR M" },
+    "2305": { "name": "S PRAVINRAJ", "paygroup": "PF", "classification": "Office", "department": "Graphic Designing & Editing", "doj": "22-Nov-2024", "reviewer": "POOBALAN.R" },
+    "2318": { "name": "DHIVAKARAN", "paygroup": "PF", "classification": "Office", "department": "Graphic Designing & Editing", "doj": "01-Nov-2024", "reviewer": "CHITHIRAIKUMAR M" },
+    "1234": { "name": "RAJA IYER", "paygroup": "PF", "classification": "Retail", "department": "Dombivili", "doj": "01-Apr-2021", "reviewer": "VENKATESAN C" },
+    "1236": { "name": "DHANALAKSHMI M", "paygroup": "PF", "classification": "Retail", "department": "Dombivili", "doj": "01-Apr-2021", "reviewer": "VENKATESAN C" },
+    "1246": { "name": "MANISHA JAYANT BHINGARDE", "paygroup": "PF", "classification": "Retail", "department": "Dombivili", "doj": "01-Apr-2021", "reviewer": "VENKATESAN C" },
+    "2233": { "name": "ARCHANA SWAPNIL CHIKANE", "paygroup": "PF", "classification": "Retail", "department": "Dombivili", "doj": "10-Aug-2024", "reviewer": "VENKATESAN C" },
+    "1654": { "name": "RAVI M", "paygroup": "Retainers", "classification": "Office", "department": "DRIVER", "doj": "01-Apr-2022", "reviewer": "T.S.SRINIVASAN" },
+    "1873": { "name": "S KATHIRVEL", "paygroup": "PF", "classification": "Office", "department": "DRIVER", "doj": "01-Jun-2023", "reviewer": "SHARADA PRAKASH" },
+    "1874": { "name": "KARTHICK C", "paygroup": "PF", "classification": "Office", "department": "DRIVER", "doj": "01-Jun-2023", "reviewer": "RAMANARAYANAN" },
+    "1023": { "name": "MURUGAN N", "paygroup": "PF", "classification": "Office", "department": "DRIVER", "doj": "01-Apr-2009", "reviewer": "JAGADISH BABU" },
+    "1100": { "name": "CHELLADURAI M", "paygroup": "PF", "classification": "Office", "department": "DRIVER", "doj": "01-Nov-2016", "reviewer": "JAGADISH BABU" },
+    "1108": { "name": "ADITHYAN G", "paygroup": "PF", "classification": "Office", "department": "DRIVER", "doj": "01-Mar-2017", "reviewer": "JAGADISH BABU" },
+    "1754": { "name": "T V RANGANATHAN", "paygroup": "Retainers", "classification": "Warehouse", "department": "ECOMMERCE", "doj": "01-Feb-2023", "reviewer": "PRIYANKA DESHMUKH" },
+    "1170": { "name": "KANIKUMAR A", "paygroup": "PF", "classification": "Office", "department": "Editing & Designing", "doj": "01-Dec-2019", "reviewer": "POOBALAN.R" },
+    "1082": { "name": "BHARATH J", "paygroup": "PF", "classification": "Warehouse", "department": "EDP", "doj": "01-Aug-2016", "reviewer": "PADMAVATHY  V" },
+    "1118": { "name": "VISALATCHI KAVASKAR", "paygroup": "PF", "classification": "Warehouse", "department": "EDP", "doj": "02-May-2018", "reviewer": "PADMAVATHY  V" },
+    "1184": { "name": "S ABDULLA", "paygroup": "PF", "classification": "Warehouse", "department": "EDP", "doj": "01-Mar-2020", "reviewer": "PADMAVATHY  V" },
+    "1017": { "name": "PADMAVATHY  V", "paygroup": "PF", "classification": "Warehouse", "department": "EDP", "doj": "01-Apr-2008", "reviewer": "SHARADA PRAKASH" },
+    "1113": { "name": "ELUMALAI R", "paygroup": "PF", "classification": "Warehouse", "department": "EXPORTS", "doj": "01-Aug-2017", "reviewer": "NIRMALA B S" },
+    "1707": { "name": "JAGADEESH M", "paygroup": "PF", "classification": "Warehouse", "department": "EXPORTS", "doj": "14-Dec-2022", "reviewer": "NIRMALA B S" },
+    "1735": { "name": "GOKULAKRISHNAN S", "paygroup": "PF", "classification": "Warehouse", "department": "EXPORTS", "doj": "17-Feb-2023", "reviewer": "NIRMALA B S" },
+    "1839": { "name": "MOHAN E.K.", "paygroup": "Retainers", "classification": "Warehouse", "department": "EXPORTS", "doj": "01-May-2023", "reviewer": "" },
+    "1149": { "name": "NIRMALA B S", "paygroup": "PF", "classification": "Warehouse", "department": "EXPORTS", "doj": "18-Jul-2019", "reviewer": "SHARADA PRAKASH" },
+    "1062": { "name": "ANGEL A", "paygroup": "PF", "classification": "Warehouse", "department": "Food", "doj": "01-May-2015", "reviewer": "DEPPURI BHUVANA REDDY" },
+    "1694": { "name": "SINTHANAI SELVA T", "paygroup": "PF", "classification": "Retail", "department": "Giriecom", "doj": "17-Nov-2022", "reviewer": "VIGNESWAR D" },
+    "2303": { "name": "K KAVITHA", "paygroup": "NPF", "classification": "Retail", "department": "Giriecom", "doj": "18-Nov-2024", "reviewer": "VIGNESWAR D" },
+    "2309": { "name": "VALLARASU", "paygroup": "PF", "classification": "Retail", "department": "Giriecom", "doj": "21-Nov-2024", "reviewer": "VIGNESWAR D" },
+    "1217": { "name": "PRABHAKAR", "paygroup": "PF", "classification": "Retail", "department": "Goregaon", "doj": "01-Feb-2021", "reviewer": "VENKATESAN C" },
+    "1850": { "name": "ARUN A", "paygroup": "PF", "classification": "Retail", "department": "Goregaon", "doj": "01-May-2023", "reviewer": "VENKATESAN C" },
+    "2268": { "name": "EDWARD ALEXANDER STEPHEN STEPHEN", "paygroup": "PF", "classification": "Retail", "department": "GOREGAON", "doj": "01-Sep-2024", "reviewer": "VENKATESAN C" },
+    "2269": { "name": "MURALIDHARAN MARI YADAVA", "paygroup": "PF", "classification": "Retail", "department": "GOREGAON", "doj": "01-Sep-2024", "reviewer": "VENKATESAN C" },
+    "2160": { "name": "M SUBRAMANIAN", "paygroup": "Retainers", "classification": "Office", "department": "HOMAM SERVICE", "doj": "10-Jun-2024", "reviewer": "SHARADA PRAKASH" },
+    "1898": { "name": "ANBARASAN.E", "paygroup": "PF", "classification": "Retail", "department": "Hosur", "doj": "20-Jul-2023", "reviewer": "KARTHIKEYAN S" },
+    "1987": { "name": "ARUNKUMAR MANIGANDAN", "paygroup": "PF", "classification": "Retail", "department": "Hosur", "doj": "01-Dec-2023", "reviewer": "KARTHIKEYAN S" },
+    "1193": { "name": "KARTHIKEYAN S", "paygroup": "PF", "classification": "Retail", "department": "Hosur", "doj": "26-Oct-2020", "reviewer": "AMARGIRISH" },
+    "1685": { "name": "S SHALINI", "paygroup": "PF", "classification": "Office", "department": "HR", "doj": "07-Nov-2022", "reviewer": "GAYATHRI  S" },
+    "1025": { "name": "GAYATHRI  S", "paygroup": "PF", "classification": "Office", "department": "HR", "doj": "01-Nov-2009", "reviewer": "SHARADA PRAKASH" },
+    "2240": { "name": "SHWETA ASHISH BAFNA", "paygroup": "Retainers", "classification": "Office", "department": "Information Technology", "doj": "01-Sep-2024", "reviewer": "PRIYANKA DESHMUKH" },
+    "1060": { "name": "KALAISELVAN A", "paygroup": "PF", "classification": "Office", "department": "IT", "doj": "01-Oct-2014", "reviewer": "ELLAPPAN" },
+    "1165": { "name": "AARTHI PALANISAMY", "paygroup": "PF", "classification": "Office", "department": "it", "doj": "01-Dec-2019", "reviewer": "PRIYANKA DESHMUKH" },
+    "1382": { "name": "PUGAZHENTHI I", "paygroup": "PF", "classification": "Office", "department": "it", "doj": "15-Nov-2021", "reviewer": "ELLAPPAN" },
+    "1903": { "name": "JANANI B", "paygroup": "PF", "classification": "Office", "department": "IT", "doj": "01-Aug-2023", "reviewer": "PRIYANKA DESHMUKH" },
+    "2209": { "name": "HARSHINI MATHIVANAN", "paygroup": "PF", "classification": "Office", "department": "IT", "doj": "12-Aug-2024", "reviewer": "PRIYANKA DESHMUKH" },
+    "2210": { "name": "YASIN DEEN S", "paygroup": "PF", "classification": "Office", "department": "IT", "doj": "13-Aug-2024", "reviewer": "ELLAPPAN" },
+    "1348": { "name": "SURIYALAKSHMI S", "paygroup": "PF", "classification": "Retail", "department": "Jayanagar", "doj": "24-Sep-2021", "reviewer": "SATHISH A" },
+    "1714": { "name": "POOJA.R", "paygroup": "PF", "classification": "Retail", "department": "Jayanagar", "doj": "01-Dec-2022", "reviewer": "SATHISH A" },
+    "1760": { "name": "KALE NEWAR", "paygroup": "PF", "classification": "Retail", "department": "Jayanagar", "doj": "01-Feb-2023", "reviewer": "SATHISH A" },
+    "1780": { "name": "MARVIN ALEX M", "paygroup": "PF", "classification": "Retail", "department": "Jayanagar", "doj": "13-Mar-2023", "reviewer": "SATHISH A" },
+    "1810": { "name": "MOHANKUMAR MURALI", "paygroup": "PF", "classification": "Retail", "department": "Jayanagar", "doj": "01-Apr-2023", "reviewer": "SATHISH A" },
+    "1894": { "name": "SADASHIVAN S", "paygroup": "PF", "classification": "Retail", "department": "Jayanagar", "doj": "07-Jul-2023", "reviewer": "SATHISH A" },
+    "2225": { "name": "VAISHNAVI S", "paygroup": "PF", "classification": "Retail", "department": "Jayanagar", "doj": "01-Aug-2024", "reviewer": "SATHISH A" },
+    "2298": { "name": "ARUNADEVI", "paygroup": "PF", "classification": "Retail", "department": "JAYANAGAR", "doj": "01-Nov-2024", "reviewer": "SATHISH A" },
+    "1270": { "name": "SATHISH A", "paygroup": "PF", "classification": "Retail", "department": "Jayanagar", "doj": "01-Jul-2021", "reviewer": "AMARGIRISH" },
+    "1055": { "name": "MAHESWARI J", "paygroup": "PF", "classification": "Retail", "department": "Kanchi Puram", "doj": "02-May-2014", "reviewer": "RAVIKUMAR" },
+    "1905": { "name": "BHAVANI PAZHANI", "paygroup": "PF", "classification": "Retail", "department": "Kanchi Puram", "doj": "01-Aug-2023", "reviewer": "RAVIKUMAR" },
+    "1134": { "name": "RAVIKUMAR", "paygroup": "PF", "classification": "Retail", "department": "Kanchi Puram", "doj": "01-Apr-2019", "reviewer": "AMARGIRISH" },
+    "1645": { "name": "LAKSHMI.K", "paygroup": "Retainers", "classification": "Retail", "department": "KANCHIPURAM OLD", "doj": "01-Apr-2022", "reviewer": "RAVIKUMAR" },
+    "1577": { "name": "MAHESH CHAND", "paygroup": "PF", "classification": "Retail", "department": "Karolbagh", "doj": "01-Jul-2022", "reviewer": "KARTHIKEYAN M MADHI" },
+    "1629": { "name": "NEHA SHARMA", "paygroup": "PF", "classification": "Retail", "department": "Karolbagh", "doj": "12-Aug-2022", "reviewer": "KARTHIKEYAN M MADHI" },
+    "1755": { "name": "MANSHI", "paygroup": "PF", "classification": "Retail", "department": "Karolbagh", "doj": "01-Feb-2023", "reviewer": "KARTHIKEYAN M MADHI" },
+    "2095": { "name": "SANJAY PALANISAMY", "paygroup": "PF", "classification": "Retail", "department": "Karolbagh", "doj": "01-May-2024", "reviewer": "KARTHIKEYAN M MADHI" },
+    "1467": { "name": "KARTHIKEYAN M MADHI", "paygroup": "PF", "classification": "Retail", "department": "Karolbagh", "doj": "25-Feb-2022", "reviewer": "AMARGIRISH" },
+    "1979": { "name": "VALANGOVAN GOVINDARAJAN", "paygroup": "PF", "classification": "Retail", "department": "Kumakonam", "doj": "01-Dec-2023", "reviewer": "KARUNAKARAN  L" },
+    "1981": { "name": "VIGNESHWARAN EZHILAN", "paygroup": "PF", "classification": "Retail", "department": "Kumakonam", "doj": "01-Dec-2023", "reviewer": "KARUNAKARAN  L" },
+    "1982": { "name": "GAYATHRI KARTHI", "paygroup": "PF", "classification": "Retail", "department": "Kumakonam", "doj": "08-Dec-2023", "reviewer": "KARUNAKARAN  L" },
+    "1986": { "name": "JAGATHEESWARI MEIVEL", "paygroup": "PF", "classification": "Retail", "department": "Kumakonam", "doj": "08-Dec-2023", "reviewer": "KARUNAKARAN  L" },
+    "1991": { "name": "HEMA.K", "paygroup": "PF", "classification": "Retail", "department": "Kumakonam", "doj": "07-Dec-2023", "reviewer": "KARUNAKARAN  L" },
+    "1992": { "name": "SATHYA SANKAR", "paygroup": "PF", "classification": "Retail", "department": "Kumakonam", "doj": "11-Dec-2023", "reviewer": "KARUNAKARAN  L" },
+    "1024": { "name": "KARUNAKARAN  L", "paygroup": "PF", "classification": "Retail", "department": "Kumakonam", "doj": "01-Oct-2009", "reviewer": "AMARGIRISH" },
+    "2116": { "name": "BALAJI RAJARAM", "paygroup": "Retainers", "classification": "Office", "department": "LEGAL", "doj": "13-May-2024", "reviewer": "AMIT JHA" },
+    "1028": { "name": "PALSAMY  K", "paygroup": "PF", "classification": "Retail", "department": "Madurai", "doj": "01-Jan-2010", "reviewer": "ARUL BOOPATHI S" },
+    "1051": { "name": "LAKSHMANAN M", "paygroup": "PF", "classification": "Retail", "department": "Madurai", "doj": "01-May-2013", "reviewer": "ARUL BOOPATHI S" },
+    "1033": { "name": "JANAKIRAMAN K", "paygroup": "PF", "classification": "Retail", "department": "Madurai Wt", "doj": "01-Nov-2010", "reviewer": "ARUL BOOPATHI S" },
+    "1109": { "name": "RENU", "paygroup": "PF", "classification": "Retail", "department": "Madurai Wt", "doj": "01-Apr-2017", "reviewer": "ARUL BOOPATHI S" },
+    "1802": { "name": "MARIDOSS S", "paygroup": "PF", "classification": "Retail", "department": "Madurai Wt", "doj": "10-Apr-2023", "reviewer": "ARUL BOOPATHI S" },
+    "1002": { "name": "ARUL BOOPATHI S", "paygroup": "PF", "classification": "Retail", "department": "Madurai Wt", "doj": "01-Apr-1989", "reviewer": "PALSAMY  K" },
+    "1660": { "name": "RANGAIAH E", "paygroup": "Retainers", "classification": "Retail", "department": "MalkajGiri", "doj": "01-Apr-2022", "reviewer": "HARIBABU  K" },
+    "1989": { "name": "NAVEENKUMAR CHANDRAN", "paygroup": "PF", "classification": "Retail", "department": "MalkajGiri", "doj": "10-Dec-2023", "reviewer": "HARIBABU  K" },
+    "1990": { "name": "PREMKUMAR SELVARAJ", "paygroup": "PF", "classification": "Retail", "department": "MalkajGiri", "doj": "04-Dec-2023", "reviewer": "HARIBABU  K" },
+    "2088": { "name": "MURUGANANDHAM.G", "paygroup": "PF", "classification": "Retail", "department": "MalkajGiri", "doj": "20-Apr-2024", "reviewer": "HARIBABU  K" },
+    "2297": { "name": "KUNDRU ANUSUYA", "paygroup": "PF", "classification": "Retail", "department": "MalkajGiri", "doj": "01-Nov-2024", "reviewer": "HARIBABU  K" },
+    "2306": { "name": "CHINTHALA VINEETH", "paygroup": "PF", "classification": "Retail", "department": "MalkajGiri", "doj": "01-Nov-2024", "reviewer": "HARIBABU  K" },
+    "2310": { "name": "BANDA VAMSHI", "paygroup": "PF", "classification": "Retail", "department": "MalkajGiri", "doj": "15-Nov-2024", "reviewer": "HARIBABU  K" },
+    "1074": { "name": "SRIDEVI M", "paygroup": "PF", "classification": "Retail", "department": "Malleswaram", "doj": "01-Oct-2015", "reviewer": "SURESH KUMAR V" },
+    "1075": { "name": "SHOBHA R", "paygroup": "PF", "classification": "Retail", "department": "Malleswaram", "doj": "01-Oct-2015", "reviewer": "SURESH KUMAR V" },
+    "1161": { "name": "MANJU H", "paygroup": "PF", "classification": "Retail", "department": "Malleswaram", "doj": "01-Dec-2019", "reviewer": "SURESH KUMAR V" },
+    "2255": { "name": "PRABU JAYAKUMAR", "paygroup": "PF", "classification": "Retail", "department": "Malleswaram", "doj": "04-Sep-2024", "reviewer": "SURESH KUMAR V" },
+    "1402": { "name": "SURESH KUMAR V", "paygroup": "Retainers", "classification": "Retail", "department": "Malleswaram", "doj": "08-Nov-2021", "reviewer": "AMARGIRISH" },
+    "VR59": { "name": "SANJANI S", "paygroup": "Voucher", "classification": "Retail", "department": "MANGADU", "doj": "11-Nov-2024", "reviewer": "" },
+    "1140": { "name": "S KRIPAKARAN", "paygroup": "PF", "classification": "Retail", "department": "Mangadu Showroom", "doj": "01-Apr-2019", "reviewer": "" },
+    "2231": { "name": "S P SANJAY", "paygroup": "PF", "classification": "Retail", "department": "Mangadu Showroom", "doj": "01-Aug-2024", "reviewer": "" },
+    "2304": { "name": "SARANYA KANNAN", "paygroup": "PF", "classification": "Retail", "department": "Mangadu Showroom", "doj": "09-Nov-2024", "reviewer": "" },
+    "2017": { "name": "SARATHKUMAR", "paygroup": "PF", "classification": "Retail", "department": "Mantsr", "doj": "09-Feb-2024", "reviewer": "" },
+    "2046": { "name": "NADHINI SANTHANAMOORTHI", "paygroup": "PF", "classification": "Retail", "department": "Mantsr", "doj": "13-Mar-2024", "reviewer": "" },
+    "1156": { "name": "MANISHA RAJWAR", "paygroup": "PF", "classification": "Retail", "department": "MATUNGA", "doj": "01-Oct-2019", "reviewer": "VENKATESAN C" },
+    "2270": { "name": "AMEY VILAS PAGADE", "paygroup": "PF", "classification": "Retail", "department": "MATUNGA", "doj": "20-Sep-2024", "reviewer": "VENKATESAN C" },
+    "2271": { "name": "B GAYATHRI", "paygroup": "PF", "classification": "Retail", "department": "MATUNGA", "doj": "01-Sep-2024", "reviewer": "VENKATESAN C" },
+    "2307": { "name": "RAJU TIPANNA CHALVADI", "paygroup": "PF", "classification": "Retail", "department": "MATUNGA", "doj": "08-Nov-2024", "reviewer": "VENKATESAN C" },
+    "2308": { "name": "KALAIVANI LOGANATHAN", "paygroup": "PF", "classification": "Retail", "department": "MATUNGA", "doj": "14-Nov-2024", "reviewer": "VENKATESAN C" },
+    "1131": { "name": "LAKSHMAN YADAV", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Apr-2019", "reviewer": "VENKATESAN C" },
+    "1155": { "name": "MALARMANNAN P", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Aug-2019", "reviewer": "VENKATESAN C" },
+    "1160": { "name": "PUNASELVAM", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "20-Nov-2019", "reviewer": "VENKATESAN C" },
+    "1237": { "name": "ANTHONY AMMAL", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Apr-2021", "reviewer": "VENKATESAN C" },
+    "1239": { "name": "ANITA UPENDRA BASANI", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Apr-2021", "reviewer": "VENKATESAN C" },
+    "1241": { "name": "VANITA ASHOK KUMAR", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Apr-2021", "reviewer": "VENKATESAN C" },
+    "1242": { "name": "RENUKA NARLA", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Apr-2021", "reviewer": "VENKATESAN C" },
+    "1247": { "name": "RAMESH NAWALE", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Apr-2021", "reviewer": "VENKATESAN C" },
+    "1359": { "name": "SANDEEP YASHWANT KADAM", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Oct-2021", "reviewer": "VENKATESAN C" },
+    "1373": { "name": "BHAGYALAKSHMI CHINNASAMY", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Oct-2021", "reviewer": "VENKATESAN C" },
+    "1452": { "name": "VELMURUGAN N", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "31-Jan-2022", "reviewer": "VENKATESAN C" },
+    "1701": { "name": "SHANKAR THAKUR", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Dec-2022", "reviewer": "VENKATESAN C" },
+    "1848": { "name": "VIJAY KUMAR", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-May-2023", "reviewer": "VENKATESAN C" },
+    "1849": { "name": "FATHIMA MARY KUMAR", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-May-2023", "reviewer": "VENKATESAN C" },
+    "1947": { "name": "SONAL TIPANNA", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Oct-2023", "reviewer": "VENKATESAN C" },
+    "1955": { "name": "SADHANA VASANT SANKPAL", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Oct-2023", "reviewer": "VENKATESAN C" },
+    "2064": { "name": "VINAY KUMAR SURESH CHANDRA VAISHYA", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Mar-2024", "reviewer": "VENKATESAN C" },
+    "2234": { "name": "SAYALI KAILAS THORAT", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "09-Aug-2024", "reviewer": "VENKATESAN C" },
+    "2236": { "name": "MADHAVAN", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "08-Aug-2024", "reviewer": "VENKATESAN C" },
+    "2290": { "name": "THEVAR VANUMALAI PRABHAKARAN", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Oct-2024", "reviewer": "VENKATESAN C" },
+    "2293": { "name": "UTCHIMALI", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "24-Oct-2024", "reviewer": "VENKATESAN C" },
+    "VR57": { "name": "SUJI", "paygroup": "Voucher", "classification": "Retail", "department": "Matunga Showroom", "doj": "23/10/2024", "reviewer": "VENKATESAN C" },
+    "1235": { "name": "VENKATESAN C", "paygroup": "PF", "classification": "Retail", "department": "Matunga Showroom", "doj": "01-Apr-2021", "reviewer": "AMARGIRISH" },
+    "1049": { "name": "SUGUNA E", "paygroup": "PF", "classification": "Retail", "department": "Mogappair", "doj": "01-Oct-2012", "reviewer": "SANKAR C" },
+    "1973": { "name": "SURYA R", "paygroup": "PF", "classification": "Retail", "department": "Mogappair", "doj": "08-Nov-2023", "reviewer": "SANKAR C" },
+    "2042": { "name": "SANKAR C", "paygroup": "PF", "classification": "Retail", "department": "Mogappair", "doj": "11-Mar-2024", "reviewer": "AMARGIRISH" },
+    "1355": { "name": "MAHADEVAN NARAYANA IYER", "paygroup": "Retainers", "classification": "Retail", "department": "MULUND", "doj": "01-Oct-2021", "reviewer": "C.VENKATESH" },
+    "1357": { "name": "MALATHI POOJARI", "paygroup": "PF", "classification": "Retail", "department": "Mulund", "doj": "01-Oct-2021", "reviewer": "C.VENKATESH" },
+    "1843": { "name": "LAKSHMANAN", "paygroup": "PF", "classification": "Retail", "department": "Mulund", "doj": "01-May-2023", "reviewer": "C.VENKATESH" },
+    "1846": { "name": "THIRUMALAI MARI", "paygroup": "PF", "classification": "Retail", "department": "Mulund", "doj": "01-May-2023", "reviewer": "C.VENKATESH" },
+    "2147": { "name": "SUJATA VASANT SAPKAL", "paygroup": "PF", "classification": "Retail", "department": "Mulund", "doj": "01-Jun-2024", "reviewer": "C.VENKATESH" },
+    "1001": { "name": "VAIDHYANATHAN J", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Apr-1989", "reviewer": "SRIDHAR R" },
+    "1003": { "name": "BHUVANESWARI G", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "18-Sep-1993", "reviewer": "SRIDHAR R" },
+    "1026": { "name": "SUDHA S", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Dec-2009", "reviewer": "SRIDHAR R" },
+    "1029": { "name": "LAKSHMI S", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-May-2010", "reviewer": "SRIDHAR R" },
+    "1041": { "name": "SENTHILKUMAR A", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Jun-2012", "reviewer": "SRIDHAR R" },
+    "1047": { "name": "VIMALKUMAR N", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Aug-2012", "reviewer": "SRIDHAR R" },
+    "1057": { "name": "SRIDHAR R", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "02-May-2014", "reviewer": "SRIDHAR R" },
+    "1067": { "name": "RAJKAMAL M", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Jul-2015", "reviewer": "SRIDHAR R" },
+    "1070": { "name": "HARIRAJ D", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Sep-2015", "reviewer": "SRIDHAR R" },
+    "1071": { "name": "SARAVANAN A", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Sep-2015", "reviewer": "SRIDHAR R" },
+    "1072": { "name": "BHAKYALAKSHMI", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Sep-2015", "reviewer": "SRIDHAR R" },
+    "1083": { "name": "RAMAKRISHNAN R", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Sep-2016", "reviewer": "SRIDHAR R" },
+    "1102": { "name": "KRISHNAKUMARI V", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Nov-2016", "reviewer": "SRIDHAR R" },
+    "1112": { "name": "MANI J", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Aug-2017", "reviewer": "SRIDHAR R" },
+    "1121": { "name": "KUMAR S", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "23-Jun-2018", "reviewer": "SRIDHAR R" },
+    "1122": { "name": "USHA R", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "19-Jul-2018", "reviewer": "SRIDHAR R" },
+    "1136": { "name": "VIJAYALAKSHMI", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Apr-2019", "reviewer": "SRIDHAR R" },
+    "1137": { "name": "RANJITHA S", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Apr-2019", "reviewer": "SRIDHAR R" },
+    "1176": { "name": "LAKSHMI R", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "13-Jan-2020", "reviewer": "SRIDHAR R" },
+    "1188": { "name": "ANNAMALAI P", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Mar-2020", "reviewer": "SRIDHAR R" },
+    "1191": { "name": "SARAVANAN S", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "07-Sep-2020", "reviewer": "SRIDHAR R" },
+    "1229": { "name": "SAKTHIVEL R", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "03-Mar-2021", "reviewer": "SRIDHAR R" },
+    "1256": { "name": "VENKATESAN  R", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Jun-2011", "reviewer": "SRIDHAR R" },
+    "1259": { "name": "SUJATHA K", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Jul-2021", "reviewer": "SRIDHAR R" },
+    "1345": { "name": "JAYANTHI.J", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Mar-2019", "reviewer": "SRIDHAR R" },
+    "1395": { "name": "MONISHA MOHANA SUNDARI D", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "09-Dec-2021", "reviewer": "SRIDHAR R" },
+    "1478": { "name": "VASUKI R", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "14-Mar-2022", "reviewer": "SRIDHAR R" },
+    "1482": { "name": "VIGNESH KUMAR B", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "08-Apr-2022", "reviewer": "SRIDHAR R" },
+    "1491": { "name": "RAMYA S", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "07-Mar-2022", "reviewer": "SRIDHAR R" },
+    "1502": { "name": "BHUVANESWARI G", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "09-May-2022", "reviewer": "SRIDHAR R" },
+    "1504": { "name": "N SHALINI", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "09-May-2022", "reviewer": "SRIDHAR R" },
+    "1510": { "name": "P SHYAMALA", "paygroup": "Retainers", "classification": "Retail", "department": "MYLAPORE", "doj": "13-May-2022", "reviewer": "SRIDHAR R" },
+    "1514": { "name": "MAHESH KUMAR B", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "13-May-2022", "reviewer": "SRIDHAR R" },
+    "1599": { "name": "PUNITHA M", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Aug-2022", "reviewer": "SRIDHAR R" },
+    "1646": { "name": "KRISHNA MOHAN P V", "paygroup": "Retainers", "classification": "Retail", "department": "MYLAPORE", "doj": "01-Apr-2022", "reviewer": "SRIDHAR R" },
+    "1648": { "name": "SUBRAMANIA KUMAR", "paygroup": "Retainers", "classification": "Retail", "department": "MYLAPORE", "doj": "01-Apr-2022", "reviewer": "SRIDHAR R" },
+    "1649": { "name": "Jayalakshmi S", "paygroup": "Retainers", "classification": "Retail", "department": "MYLAPORE", "doj": "01-Apr-2022", "reviewer": "SRIDHAR R" },
+    "1658": { "name": "RAMESH", "paygroup": "Retainers", "classification": "Retail", "department": "MYLAPORE", "doj": "01-Apr-2022", "reviewer": "SRIDHAR R" },
+    "1659": { "name": "MANGALAM", "paygroup": "Retainers", "classification": "Retail", "department": "MYLAPORE", "doj": "01-Apr-2022", "reviewer": "SRIDHAR R" },
+    "1662": { "name": "VASUNDRA", "paygroup": "Retainers", "classification": "Retail", "department": "MYLAPORE", "doj": "01-Jun-2022", "reviewer": "SRIDHAR R" },
+    "1667": { "name": "E SUGANYA", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Oct-2022", "reviewer": "SRIDHAR R" },
+    "1744": { "name": "C RAJA", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "06-Feb-2023", "reviewer": "SRIDHAR R" },
+"1745": { "name": "KRITHIVASAN R", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "09-Feb-2023", "reviewer": "SRIDHAR R" },
+"1774": { "name": "SANJU R", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "13-Mar-2023", "reviewer": "SRIDHAR R" },
+"1875": { "name": "SUJATHA P", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Jun-2023", "reviewer": "SRIDHAR R" },
+"1920": { "name": "VINOTH", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "10-Aug-2023", "reviewer": "SRIDHAR R" },
+"1971": { "name": "VIJAY RAJA", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "08-Nov-2023", "reviewer": "SRIDHAR R" },
+"2202": { "name": "SRIDHAR KANDHASAMY", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "25-Jul-2024", "reviewer": "SRIDHAR R" },
+"2224": { "name": "SANGEETHA", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Aug-2024", "reviewer": "SRIDHAR R" },
+"2226": { "name": "VISHAL PANDIYAN", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Aug-2024", "reviewer": "SRIDHAR R" },
+"2228": { "name": "G LOGESHWARI", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "13-Aug-2024", "reviewer": "SRIDHAR R" },
+"2232": { "name": "KALAIVANI", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "05-Aug-2024", "reviewer": "SRIDHAR R" },
+"2244": { "name": "SURESH G", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Sep-2024", "reviewer": "SRIDHAR R" },
+"2246": { "name": "BHAVANI C", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "01-Sep-2024", "reviewer": "SRIDHAR R" },
+"2265": { "name": "SOWNDARIYA R", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "12-Sep-2024", "reviewer": "SRIDHAR R" },
+"2267": { "name": "SATHYA J", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "12-Sep-2024", "reviewer": "SRIDHAR R" },
+"2275": { "name": "S INDRA BAI", "paygroup": "PF", "classification": "Retail", "department": "MYLAPORE", "doj": "01-Oct-2024", "reviewer": "SRIDHAR R" },
+"2285": { "name": "M VAIDYANATHAN", "paygroup": "PF", "classification": "Retail", "department": "MYLAPORE", "doj": "01-Oct-2024", "reviewer": "SRIDHAR R" },
+"2296": { "name": "VENKATESHWARA B", "paygroup": "PF", "classification": "Retail", "department": "MYLAPORE", "doj": "01-Nov-2024", "reviewer": "SRIDHAR R" },
+"VR33": { "name": "SOWMIYA.V", "paygroup": "Voucher", "classification": "Retail", "department": "Mylapore", "doj": "01-Jun-2024", "reviewer": "SRIDHAR R" },
+"2070": { "name": "SHANMUGARAJA", "paygroup": "PF", "classification": "Retail", "department": "Mylapore", "doj": "04-Apr-2024", "reviewer": "AMARGIRISH" },
+"1063": { "name": "CHANDRASEKARAN K", "paygroup": "Retainers", "classification": "Retail", "department": "NANGANALLUR", "doj": "01-Jun-2015", "reviewer": "AMARGIRISH" },
+"1056": { "name": "NIBHA KUMARI P", "paygroup": "PF", "classification": "Retail", "department": "Nanganullur", "doj": "02-May-2014", "reviewer": "CHANDRASEKARAN K" },
+    "1513": { "name": "K RAMESH", "paygroup": "PF", "classification": "Retail", "department": "Nanganullur", "doj": "11-May-2022", "reviewer": "CHANDRASEKARAN K" },
+    "1736": { "name": "P. J. BHAGAVATHY", "paygroup": "PF", "classification": "Retail", "department": "Nanganullur", "doj": "01-Feb-2023", "reviewer": "CHANDRASEKARAN K" },
+    "2061": { "name": "BHUVANESWARI MANI", "paygroup": "PF", "classification": "Retail", "department": "Nanganullur", "doj": "06-Mar-2024", "reviewer": "CHANDRASEKARAN K" },
+    "2170": { "name": "SUGANTHI.N NATARAJAN", "paygroup": "PF", "classification": "Retail", "department": "Nanganullur", "doj": "02-Jul-2024", "reviewer": "CHANDRASEKARAN K" },
+    "2171": { "name": "KAVIYA ELUMALAI", "paygroup": "PF", "classification": "Retail", "department": "Nanganullur", "doj": "02-Jul-2024", "reviewer": "CHANDRASEKARAN K" },
+    "1362": { "name": "ANBU A", "paygroup": "PF", "classification": "Retail", "department": "Nerul", "doj": "01-Oct-2021", "reviewer": "C VENKATESH" },
+    "2235": { "name": "VALLI SRINIVASAN", "paygroup": "PF", "classification": "Retail", "department": "NERUL", "doj": "01-Aug-2024", "reviewer": "C VENKATESH" },
+    "VR09": { "name": "RANJANI RAJU", "paygroup": "Voucher", "classification": "Retail", "department": "Nerul", "doj": "18-Dec-2023", "reviewer": "C VENKATESH" },
+    "1640": { "name": "TANIYA KUMARI", "paygroup": "PF", "classification": "Retail", "department": "New Delhi", "doj": "01-Sep-2022", "reviewer": "SENTHILMURUGAN A" },
+    "1641": { "name": "MITHUNCHAKARAVATHI.S", "paygroup": "PF", "classification": "Retail", "department": "New Delhi", "doj": "01-Sep-2022", "reviewer": "SENTHILMURUGAN A" },
+    "1722": { "name": "MAHENDRAN K", "paygroup": "PF", "classification": "Retail", "department": "New Delhi", "doj": "01-Jan-2023", "reviewer": "SENTHILMURUGAN A" },
+    "2078": { "name": "CHANDRU MARIMUTHU", "paygroup": "PF", "classification": "Retail", "department": "New Delhi", "doj": "19-Apr-2024", "reviewer": "SENTHILMURUGAN A" },
+    "2213": { "name": "VIJAY KUMAR", "paygroup": "PF", "classification": "Retail", "department": "New Delhi", "doj": "01-Aug-2024", "reviewer": "SENTHILMURUGAN A" },
+    "1171": { "name": "SENTHILMURUGAN A", "paygroup": "PF", "classification": "Retail", "department": "New Delhi", "doj": "01-Dec-2019", "reviewer": "AMARGIRISH" },
+    "2264": { "name": "M DOMINIC RABUNI", "paygroup": "NPF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "03-Sep-2024", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1068": { "name": "VEERARAGHAVAN P R", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "01-Jul-2015", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1133": { "name": "J KISHOREKUMAR", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "01-Apr-2019", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1368": { "name": "KALYANAKUMAR T", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "25-Sep-2021", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1793": { "name": "MAHALAKSHMI A", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "01-Apr-2023", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1794": { "name": "AJITHKUMAR ANANDHAN", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "01-Apr-2023", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1795": { "name": "VINITHA G", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "02-Apr-2023", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1796": { "name": "S HEMAVATHY", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "15-Apr-2023", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1797": { "name": "R.ALAMELU", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "15-Apr-2023", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1798": { "name": "C.BALAJI", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "16-Apr-2023", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1806": { "name": "MOHANRAJ CHANDRASEKAR", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "20-Apr-2023", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1815": { "name": "ANNAPOORANI.A", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "21-Apr-2023", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1941": { "name": "POORNIMA ARUMUGAM", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "01-Oct-2023", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1942": { "name": "KALIYAMMAL KANAGARAJ", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "01-Oct-2023", "reviewer": "MEERA MURALIKRISHNAN" },
+    "1008": { "name": "USHA U", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "01-Feb-2002", "reviewer": "AMARGIRISH" },
+    "1812": { "name": "MEERA MURALIKRISHNAN", "paygroup": "PF", "classification": "Retail", "department": "PALLIKARANAI", "doj": "20-Apr-2023", "reviewer": "AMARGIRISH" },
+    "1076": { "name": "SRINIVASAN K", "paygroup": "PF", "classification": "Retail", "department": "Pondycs", "doj": "01-Oct-2015", "reviewer": "JEEVANPRASATH" },
+    "1393": { "name": "SUBASHINI I", "paygroup": "PF", "classification": "Retail", "department": "Pondycs", "doj": "05-Nov-2021", "reviewer": "JEEVANPRASATH" },
+    "2013": { "name": "K SHENBAGAM", "paygroup": "PF", "classification": "Retail", "department": "Pondycs", "doj": "08-Feb-2024", "reviewer": "JEEVANPRASATH" },
+    "1511": { "name": "JEEVANPRASATH", "paygroup": "PF", "classification": "Retail", "department": "Pondycs", "doj": "25-Apr-2022", "reviewer": "AMARGIRISH" },
+    "1012": { "name": "INDRA PRIYADARSINI", "paygroup": "PF", "classification": "Office", "department": "PRODUCTION", "doj": "01-Apr-2006", "reviewer": "VISWANATHAN  S" },
+    "1014": { "name": "AMBIKA DEVI  K P", "paygroup": "PF", "classification": "Office", "department": "PRODUCTION", "doj": "01-Oct-2007", "reviewer": "VISWANATHAN  S" },
+    "1015": { "name": "GOVINDASAMY  L", "paygroup": "PF", "classification": "Office", "department": "PRODUCTION", "doj": "01-Oct-2007", "reviewer": "VISWANATHAN  S" },
+    "1571": { "name": "DEEPIKA V", "paygroup": "PF", "classification": "Office", "department": "PRODUCTION", "doj": "01-Jul-2022", "reviewer": "VISWANATHAN  S" },
+    "2273": { "name": "AKSHAYA AMARNATH", "paygroup": "PF", "classification": "Office", "department": "PRODUCTION", "doj": "03-Oct-2024", "reviewer": "VISWANATHAN  S" },
+    "1651": { "name": "Githarani K S", "paygroup": "Retainers", "classification": "Office", "department": "PRODUCTION", "doj": "01-Apr-2022", "reviewer": "RAMANARAYANAN" },
+    "1656": { "name": "RAJI V", "paygroup": "Retainers", "classification": "Office", "department": "PRODUCTION", "doj": "01-Apr-2022", "reviewer": "RAMANARAYANAN" },
+    "1018": { "name": "VISWANATHAN  S", "paygroup": "PF", "classification": "Office", "department": "PRODUCTION", "doj": "01-Apr-2008", "reviewer": "RAMANARAYANAN" },
+    "2117": { "name": "THAMIZHAMUTHU", "paygroup": "PF", "classification": "Office", "department": "Public Relations & Communication", "doj": "20-May-2024", "reviewer": "ABHISHEK" },
+    "1691": { "name": "VINAYAK K", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "01-Nov-2022", "reviewer": "JAYAN P" },
+    "1084": { "name": "SUMATHI M", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "01-Sep-2016", "reviewer": "JAYAN P" },
+    "1088": { "name": "RAVI G", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "01-Sep-2016", "reviewer": "JAYAN P" },
+    "1094": { "name": "PADMAVATHI U", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "01-Oct-2016", "reviewer": "JAYAN P" },
+    "1152": { "name": "SARGUNAM SHANKAR", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "01-Aug-2019", "reviewer": "JAYAN P" },
+    "1153": { "name": "BHARATH NAGALINGAM", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "01-Aug-2019", "reviewer": "JAYAN P" },
+    "1164": { "name": "GIRIJA R", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "01-Dec-2019", "reviewer": "JAYAN P" },
+    "1291": { "name": "PREMAJAISHANKAR", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "01-Apr-2021", "reviewer": "JAYAN P" },
+    "1294": { "name": "ANITHA.R", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "01-Jun-2021", "reviewer": "JAYAN P" },
+    "1303": { "name": "KALAIVANI", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "13-Jul-2021", "reviewer": "JAYAN P" },
+    "1331": { "name": "Ramkumar", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "20-Sep-2021", "reviewer": "JAYAN P" },
+    "1387": { "name": "VIJI S", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "01-Dec-2021", "reviewer": "JAYAN P" },
+    "1416": { "name": "THIRUMAL SUBRAMANIYAM", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "18-Jan-2022", "reviewer": "JAYAN P" },
+    "1888": { "name": "NEELAVENI JAYARAMAN", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "03-Jul-2023", "reviewer": "JAYAN P" },
+    "2150": { "name": "RAGUPATHY S", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "19-Jun-2024", "reviewer": "JAYAN P" },
+    "1053": { "name": "PREMA B", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "02-May-2014", "reviewer": "JAYAN P" },
+    "1167": { "name": "JAYAN P", "paygroup": "PF", "classification": "Puja Division", "department": "Puja Division", "doj": "01-Dec-2019", "reviewer": "JAGADISH BABU" },
+    "1615": { "name": "SHIVANI EKNATH SAKAT", "paygroup": "PF", "classification": "Retail", "department": "Punesp", "doj": "15-Aug-2022", "reviewer": "KRISHNAKUMAR K K" },
+    "1617": { "name": "RAJ RAJENDRA MORE", "paygroup": "PF", "classification": "Retail", "department": "Punesp", "doj": "31-Jul-2022", "reviewer": "KRISHNAKUMAR K K" },
+    "1619": { "name": "RAJESHWARI RAJESH SHELAR", "paygroup": "PF", "classification": "Retail", "department": "Punesp", "doj": "15-Aug-2022", "reviewer": "KRISHNAKUMAR K K" },
+    "1622": { "name": "VIDYA PRAKASH", "paygroup": "PF", "classification": "Retail", "department": "Punesp", "doj": "14-Aug-2022", "reviewer": "KRISHNAKUMAR K K" },
+    "2002": { "name": "REVATI VIKRAM AINAPURE", "paygroup": "PF", "classification": "Retail", "department": "Punesp", "doj": "01-Jan-2024", "reviewer": "KRISHNAKUMAR K K" },
+    "2084": { "name": "DANDAPANI SWAIN", "paygroup": "PF", "classification": "Retail", "department": "Punesp", "doj": "14-Apr-2024", "reviewer": "KRISHNAKUMAR K K" },
+    "2082": { "name": "KRISHNAKUMAR K K", "paygroup": "PF", "classification": "Retail", "department": "Punesp", "doj": "14-Apr-2024", "reviewer": "AMARGIRISH" },
+    "2034": { "name": "K KAMATCHI", "paygroup": "PF", "classification": "Warehouse", "department": "Purchase", "doj": "01-Mar-2024", "reviewer": "DEPPURI BHUVANA REDDY" },
+    "1027": { "name": "RAJESHWARI V", "paygroup": "PF", "classification": "Warehouse", "department": "Purchase", "doj": "01-Jan-2010", "reviewer": "SHARADA PRAKASH" },
+    "1038": { "name": "SASIKUMAR K", "paygroup": "PF", "classification": "Warehouse", "department": "Purchase", "doj": "01-Aug-2011", "reviewer": "SHARADA PRAKASH" },
+    "1048": { "name": "PARTHASARATHY S", "paygroup": "PF", "classification": "Warehouse", "department": "Purchase", "doj": "01-Aug-2012", "reviewer": "SHARADA PRAKASH" },
+    "1125": { "name": "DEPPURI BHUVANA REDDY", "paygroup": "PF", "classification": "Warehouse", "department": "Purchase", "doj": "01-Dec-2018", "reviewer": "SHARADA PRAKASH" },
+    "1040": { "name": "MAHARAJA R", "paygroup": "PF", "classification": "Office", "department": "Retail Audit", "doj": "01-Nov-2011", "reviewer": "GANESH KUMAR" },
+    "1566": { "name": "ARAVINDH R", "paygroup": "PF", "classification": "Retail", "department": "Salem", "doj": "01-Jul-2022", "reviewer": "SIVA SUBRAMANIAN" },
+    "2083": { "name": "KRISHNAKUMAR JAYAGOPAL", "paygroup": "PF", "classification": "Retail", "department": "Salem", "doj": "12-Apr-2024", "reviewer": "SIVA SUBRAMANIAN" },
+    "2085": { "name": "REKHA.V", "paygroup": "PF", "classification": "Retail", "department": "Salem", "doj": "15-Apr-2024", "reviewer": "SIVA SUBRAMANIAN" },
+    "2087": { "name": "KARTHIKEYAN.M", "paygroup": "PF", "classification": "Retail", "department": "Salem", "doj": "11-Apr-2024", "reviewer": "SIVA SUBRAMANIAN" },
+    "2089": { "name": "VINITHA.S", "paygroup": "PF", "classification": "Retail", "department": "Salem", "doj": "16-Apr-2024", "reviewer": "SIVA SUBRAMANIAN" },
+    "2316": { "name": "VIJAYKUMAR SANTHANAM", "paygroup": "PF", "classification": "Retail", "department": "SALEM", "doj": "01-Nov-2024", "reviewer": "SIVA SUBRAMANIAN" },
+    "2319": { "name": "VIGNESH MURUGESAN", "paygroup": "PF", "classification": "Retail", "department": "SALEM", "doj": "01-Nov-2024", "reviewer": "SIVA SUBRAMANIAN" },
+    "2091": { "name": "SIVA SUBRAMANIAN", "paygroup": "PF", "classification": "Retail", "department": "Salem", "doj": "18-Apr-2024", "reviewer": "AMARGIRISH" },
+    "1021": { "name": "SUDHAKAR S", "paygroup": "PF", "classification": "Retail", "department": "Secunberabad", "doj": "01-Oct-2008", "reviewer": "HARIBABU  K" },
+    "1044": { "name": "MANASA B", "paygroup": "PF", "classification": "Retail", "department": "Secunberabad", "doj": "02-Jul-2012", "reviewer": "HARIBABU  K" },
+    "1069": { "name": "PODILI SANTHOSH", "paygroup": "PF", "classification": "Retail", "department": "Secunberabad", "doj": "01-Aug-2015", "reviewer": "HARIBABU  K" },
+    "1263": { "name": "JANIGA SURYAKALA", "paygroup": "PF", "classification": "Retail", "department": "Secunberabad", "doj": "01-Jul-2021", "reviewer": "HARIBABU  K" },
+    "1497": { "name": "KEMIDI SONY", "paygroup": "PF", "classification": "Retail", "department": "Secunberabad", "doj": "01-May-2022", "reviewer": "HARIBABU  K" },
+    "2029": { "name": "JANAGANI RAMA DEVI", "paygroup": "PF", "classification": "Retail", "department": "Secunberabad", "doj": "01-Mar-2024", "reviewer": "HARIBABU  K" },
+    "VR66": { "name": "Prabha Ramanan", "paygroup": "Voucher", "classification": "Retail", "department": "Secunberabad", "doj": "", "reviewer": "HARIBABU  K" },
+    "1013": { "name": "HARIBABU  K", "paygroup": "PF", "classification": "Retail", "department": "Secunberabad", "doj": "01-Oct-2007", "reviewer": "AMARGIRISH" },
+    "1661": { "name": "SHARMA T V R", "paygroup": "Retainers", "classification": "Retail", "department": "SECUNDRABAD", "doj": "01-Apr-2022", "reviewer": "HARIBABU  K" },
+    "1089": { "name": "VETRI SELVI G", "paygroup": "PF", "classification": "Retail", "department": "Tambaram", "doj": "01-Sep-2016", "reviewer": "G VENKATESH" },
+    "1116": { "name": "ANANTHI K", "paygroup": "PF", "classification": "Retail", "department": "Tambaram", "doj": "01-Jan-2018", "reviewer": "G VENKATESH" },
+    "1183": { "name": "ARCHANA K", "paygroup": "PF", "classification": "Retail", "department": "Tambaram", "doj": "01-Feb-2020", "reviewer": "G VENKATESH" },
+    "1422": { "name": "CHANDRASEKAR SUNDAR", "paygroup": "PF", "classification": "Retail", "department": "Tambaram", "doj": "19-Jan-2022", "reviewer": "G VENKATESH" },
+    "1495": { "name": "GOPINATH", "paygroup": "PF", "classification": "Retail", "department": "Tambaram", "doj": "05-May-2022", "reviewer": "G VENKATESH" },
+    "1642": { "name": "DIVYA.D", "paygroup": "PF", "classification": "Retail", "department": "Tambaram", "doj": "01-Sep-2022", "reviewer": "G VENKATESH" },
+    "2186": { "name": "JANANI.P", "paygroup": "PF", "classification": "Retail", "department": "Tambaram", "doj": "06-Jul-2024", "reviewer": "G VENKATESH" },
+    "1952": { "name": "G VENKATESH", "paygroup": "PF", "classification": "Retail", "department": "Tambaram", "doj": "11-Oct-2023", "reviewer": "AMARGIRISH" },
+    "1065": { "name": "JAYA R", "paygroup": "PF", "classification": "Retail", "department": "Thiruvanmiyur", "doj": "01-Jul-2015", "reviewer": "AMARGIRISH" },
+    "1087": { "name": "GANESAN P", "paygroup": "PF", "classification": "Retail", "department": "Thiruvanmiyur", "doj": "01-Sep-2016", "reviewer": "AMARGIRISH" },
+    "1101": { "name": "SARALA V", "paygroup": "PF", "classification": "Retail", "department": "Thiruvanmiyur", "doj": "01-Nov-2016", "reviewer": "AMARGIRISH" },
+    "1369": { "name": "REKHA K", "paygroup": "PF", "classification": "Retail", "department": "Thiruvanmiyur", "doj": "01-Jan-2020", "reviewer": "AMARGIRISH" },
+    "1492": { "name": "ANJALI A", "paygroup": "PF", "classification": "Retail", "department": "Thiruvanmiyur", "doj": "04-May-2022", "reviewer": "AMARGIRISH" },
+    "2080": { "name": "VISALATCHI T", "paygroup": "PF", "classification": "Retail", "department": "Thiruvanmiyur", "doj": "10-Apr-2024", "reviewer": "AMARGIRISH" },
+    "2229": { "name": "LAVANYA GURUSAMY", "paygroup": "PF", "classification": "Retail", "department": "Thiruvanmiyur", "doj": "14-Aug-2024", "reviewer": "AMARGIRISH" },
+    "2033": { "name": "DINESH KUMAR", "paygroup": "PF", "classification": "Office", "department": "Ticknetwork", "doj": "01-Mar-2024", "reviewer": "" },
+    "1037": { "name": "VENKATRAMAN V", "paygroup": "PF", "classification": "Retail", "department": "Trichy", "doj": "01-Jul-2011", "reviewer": "CHANDRAMOULI J" },
+    "1139": { "name": "RAMESH NAGARAJAN", "paygroup": "PF", "classification": "Retail", "department": "Trichy", "doj": "01-Apr-2019", "reviewer": "CHANDRAMOULI J" },
+    "1872": { "name": "ANANTHANAYAKI R", "paygroup": "PF", "classification": "Retail", "department": "Trichy", "doj": "22-Jun-2023", "reviewer": "CHANDRAMOULI J" },
+    "2220": { "name": "ARUN R", "paygroup": "PF", "classification": "Retail", "department": "Trichy", "doj": "12-Aug-2024", "reviewer": "CHANDRAMOULI J" },
+    "1043": { "name": "CHANDRAMOULI J", "paygroup": "PF", "classification": "Retail", "department": "Trichy", "doj": "01-Jun-2012", "reviewer": "AMARGIRISH" },
+    "1030": { "name": "LAKSHMI DEVI U", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Aug-2010", "reviewer": "JAGADISH BABU" },
+    "1031": { "name": "KARTHIK S", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Aug-2010", "reviewer": "JAGADISH BABU" },
+    "1032": { "name": "MEENAKSHI S", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Nov-2010", "reviewer": "JAGADISH BABU" },
+    "1034": { "name": "KOTTI D", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Nov-2010", "reviewer": "JAGADISH BABU" },
+    "1066": { "name": "SRIDHAR S", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Jul-2015", "reviewer": "JAGADISH BABU" },
+    "1079": { "name": "VANITHA N", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Dec-2015", "reviewer": "JAGADISH BABU" },
+    "1093": { "name": "GEETHA R", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Oct-2016", "reviewer": "JAGADISH BABU" },
+    "1095": { "name": "SUTHA B", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Oct-2016", "reviewer": "JAGADISH BABU" },
+    "1096": { "name": "DEVI K", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Oct-2016", "reviewer": "JAGADISH BABU" },
+    "1099": { "name": "PADMA P", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Nov-2016", "reviewer": "JAGADISH BABU" },
+    "1132": { "name": "NAVALAN PANNEERSELVAM", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Apr-2019", "reviewer": "JAGADISH BABU" },
+    "1154": { "name": "VALLI M", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Aug-2019", "reviewer": "JAGADISH BABU" },
+    "1162": { "name": "SONIYA BALRAJ", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Dec-2019", "reviewer": "JAGADISH BABU" },
+    "1166": { "name": "SANDHIYA RAJESH", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Dec-2019", "reviewer": "JAGADISH BABU" },
+    "1174": { "name": "YOGINI M", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Jan-2020", "reviewer": "JAGADISH BABU" },
+    "1186": { "name": "CHITRA GOPU", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Mar-2020", "reviewer": "JAGADISH BABU" },
+    "1197": { "name": "MAHALAKSHMI S", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Dec-2020", "reviewer": "JAGADISH BABU" },
+    "1222": { "name": "SUSAI REGI ANITHA V", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Feb-2021", "reviewer": "JAGADISH BABU" },
+    "1282": { "name": "VIJAYAKUMARI EMROSE", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Apr-2021", "reviewer": "JAGADISH BABU" },
+    "1283": { "name": "DHANALAKSHMI.N", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "05-Jul-2019", "reviewer": "JAGADISH BABU" },
+    "1287": { "name": "AMALA.I", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "24-Jul-2019", "reviewer": "JAGADISH BABU" },
+    "1292": { "name": "VANITHA.S", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Jul-2021", "reviewer": "JAGADISH BABU" },
+    "1296": { "name": "ESAIVANI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "07-Jul-2021", "reviewer": "JAGADISH BABU" },
+    "1311": { "name": "KARTHICK SEKAR", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "20-Jul-2021", "reviewer": "JAGADISH BABU" },
+    "1385": { "name": "VIMAL SUBRAMANI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "18-Nov-2021", "reviewer": "JAGADISH BABU" },
+    "1406": { "name": "MANIKANDAN S R", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Jan-2022", "reviewer": "JAGADISH BABU" },
+    "1407": { "name": "VIMAL MAGENDIRAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "03-Jan-2022", "reviewer": "JAGADISH BABU" },
+    "1414": { "name": "MALATHY K", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "07-Jan-2022", "reviewer": "JAGADISH BABU" },
+    "1449": { "name": "SASIKALA EKANATHAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "07-Feb-2022", "reviewer": "JAGADISH BABU" },
+    "1450": { "name": "GANESH D", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "07-Feb-2022", "reviewer": "JAGADISH BABU" },
+    "1462": { "name": "BHUVANESWARI M", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "26-Feb-2022", "reviewer": "JAGADISH BABU" },
+    "1499": { "name": "RAJESHWARI P", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "02-May-2022", "reviewer": "JAGADISH BABU" },
+    "1533": { "name": "CHANDADEVI M", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "13-Jun-2022", "reviewer": "JAGADISH BABU" },
+    "1538": { "name": "SURIYAKALA KUMARAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "20-Jun-2022", "reviewer": "JAGADISH BABU" },
+    "1539": { "name": "DEVI.D", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "20-Jun-2022", "reviewer": "JAGADISH BABU" },
+    "1544": { "name": "MALARVIZHI.R", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "27-Jun-2022", "reviewer": "JAGADISH BABU" },
+    "1557": { "name": "SARATHI PRABAGARAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "27-Jun-2022", "reviewer": "JAGADISH BABU" },
+    "1575": { "name": "PRIYADARSHINI SURESH", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "13-Jul-2022", "reviewer": "JAGADISH BABU" },
+    "1588": { "name": "DEEPIKA PRABAGARAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Jul-2022", "reviewer": "JAGADISH BABU" },
+    "1630": { "name": "RAJAKUMARI.B", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Sep-2022", "reviewer": "JAGADISH BABU" },
+    "1631": { "name": "ROSEE", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Sep-2022", "reviewer": "JAGADISH BABU" },
+    "1632": { "name": "GAYATHRI.K", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Sep-2022", "reviewer": "JAGADISH BABU" },
+    "1634": { "name": "PADMAVATHI.G", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "08-Sep-2022", "reviewer": "JAGADISH BABU" },
+    "1670": { "name": "SHEEBASHALINI J", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Oct-2022", "reviewer": "JAGADISH BABU" },
+    "1695": { "name": "VEERAN VEERAPANDIYAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "16-Nov-2022", "reviewer": "JAGADISH BABU" },
+    "1696": { "name": "SARANYA AGILAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "18-Nov-2022", "reviewer": "JAGADISH BABU" },
+    "1697": { "name": "BAKKIYARAJ.E", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "18-Nov-2022", "reviewer": "JAGADISH BABU" },
+    "1704": { "name": "SUBRAMANIAN RENGANATHAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "14-Dec-2022", "reviewer": "JAGADISH BABU" },
+    "1708": { "name": "SARATHBABU", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "05-Dec-2022", "reviewer": "JAGADISH BABU" },
+    "1737": { "name": "SIVAGAMI S", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "15-Feb-2023", "reviewer": "JAGADISH BABU" },
+    "1739": { "name": "KALAIVANI PERUMAL", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "15-Feb-2023", "reviewer": "JAGADISH BABU" },
+    "1741": { "name": "MALARVIZHI RUTHRASEGAR", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "17-Feb-2023", "reviewer": "JAGADISH BABU" },
+    "1742": { "name": "NITIYA SARANRAJ", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "17-Feb-2023", "reviewer": "JAGADISH BABU" },
+    "1752": { "name": "RADHIKA RATHINAM", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Feb-2023", "reviewer": "JAGADISH BABU" },
+    "1762": { "name": "PRAVEENA", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "06-Mar-2023", "reviewer": "JAGADISH BABU" },
+    "1771": { "name": "BABU KESAVAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Mar-2023", "reviewer": "JAGADISH BABU" },
+    "1782": { "name": "R TEENADHARHINI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Mar-2023", "reviewer": "JAGADISH BABU" },
+    "1792": { "name": "KARANKUMAR MURALI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "10-Apr-2023", "reviewer": "JAGADISH BABU" },
+    "1800": { "name": "BENINAMARY", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "17-Apr-2023", "reviewer": "JAGADISH BABU" },
+    "1821": { "name": "R LAKSHMI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "08-May-2023", "reviewer": "JAGADISH BABU" },
+    "1823": { "name": "KRISHNAN MOORTHY", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "02-May-2023", "reviewer": "JAGADISH BABU" },
+    "1825": { "name": "R CHITRA", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "08-May-2023", "reviewer": "JAGADISH BABU" },
+    "1827": { "name": "PUGAZHARASU KUMAR", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "02-May-2023", "reviewer": "JAGADISH BABU" },
+    "1828": { "name": "SARAVANAN SOMASUNDHARAM", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "17-May-2023", "reviewer": "JAGADISH BABU" },
+    "1829": { "name": "SANGEETHA VENKATESAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "22-May-2023", "reviewer": "JAGADISH BABU" },
+    "1852": { "name": "LATHA", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "05-Jun-2023", "reviewer": "JAGADISH BABU" },
+    "1855": { "name": "S VASANTHI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Jun-2023", "reviewer": "JAGADISH BABU" },
+    "1864": { "name": "GOKUL UMAPATHY", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "20-Jun-2023", "reviewer": "JAGADISH BABU" },
+    "1880": { "name": "BHUVANESWARI SENGUTTUVAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "03-Jul-2023", "reviewer": "JAGADISH BABU" },
+    "1882": { "name": "MANJULA KARTHIKEYAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "03-Jul-2023", "reviewer": "JAGADISH BABU" },
+    "1883": { "name": "BALAMURUGAN RAMAMOORTHY", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "05-Jul-2023", "reviewer": "JAGADISH BABU" },
+    "1896": { "name": "PRIYA K", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "15-Jul-2023", "reviewer": "JAGADISH BABU" },
+    "1910": { "name": "S DEEPA", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "10-Aug-2023", "reviewer": "JAGADISH BABU" },
+    "1928": { "name": "SURESHKUMAR NAGARATHINAM", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Sep-2023", "reviewer": "JAGADISH BABU" },
+    "1966": { "name": "VIZHIVENDHAN ANBALAGAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "15-Nov-2023", "reviewer": "JAGADISH BABU" },
+    "1969": { "name": "RANJITHKUMAR A", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "17-Nov-2023", "reviewer": "JAGADISH BABU" },
+    "1980": { "name": "VIGNESH K", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "08-Dec-2023", "reviewer": "JAGADISH BABU" },
+    "1995": { "name": "MALLIGA SENGUTTUVAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Dec-2023", "reviewer": "JAGADISH BABU" },
+    "1996": { "name": "T SUNDARI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Dec-2023", "reviewer": "JAGADISH BABU" },
+    "2012": { "name": "R APOORVA", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "06-Feb-2024", "reviewer": "JAGADISH BABU" },
+    "2014": { "name": "UMA MAHESHWARI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "10-Feb-2024", "reviewer": "JAGADISH BABU" },
+    "2026": { "name": "PUNITHA GNANAPRAKASAM", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "05-Mar-2024", "reviewer": "JAGADISH BABU" },
+    "2028": { "name": "SUDHA C", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Mar-2024", "reviewer": "JAGADISH BABU" },
+    "2032": { "name": "GOMATHI P", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Mar-2024", "reviewer": "JAGADISH BABU" },
+    "2035": { "name": "THIRUNAVUKKARASU MURUGESAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "06-Mar-2024", "reviewer": "JAGADISH BABU" },
+    "2036": { "name": "AMALA P", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "05-Mar-2024", "reviewer": "JAGADISH BABU" },
+    "2040": { "name": "PARAMESHWARI CHANDRASEKAR", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "12-Mar-2024", "reviewer": "JAGADISH BABU" },
+    "2057": { "name": "K RENUKA", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "20-Mar-2024", "reviewer": "JAGADISH BABU" },
+    "2076": { "name": "GOMATHI K", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "16-Apr-2024", "reviewer": "JAGADISH BABU" },
+    "2079": { "name": "GOWTHAM SANJAY MOORTHY", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "17-Apr-2024", "reviewer": "JAGADISH BABU" },
+    "2105": { "name": "SRI PRIYA K", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "13-May-2024", "reviewer": "JAGADISH BABU" },
+    "2107": { "name": "DILLEESWARI M", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "13-May-2024", "reviewer": "JAGADISH BABU" },
+    "2108": { "name": "CHITHAMBARAM THIRUPATHI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "14-May-2024", "reviewer": "JAGADISH BABU" },
+    "2112": { "name": "PONNI ARULJOTHI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "16-May-2024", "reviewer": "JAGADISH BABU" },
+    "2113": { "name": "M MANGALAKSHMI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "16-May-2024", "reviewer": "JAGADISH BABU" },
+    "2114": { "name": "SUMATHI V", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "20-May-2024", "reviewer": "JAGADISH BABU" },
+    "2123": { "name": "DEVI RAMACHANDIRAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "23-May-2024", "reviewer": "JAGADISH BABU" },
+    "2137": { "name": "V NIRANJAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "10-Jun-2024", "reviewer": "JAGADISH BABU" },
+    "2149": { "name": "JEEVA K", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "17-Jun-2024", "reviewer": "JAGADISH BABU" },
+    "2154": { "name": "KUMARAVEL S", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "24-Jun-2024", "reviewer": "JAGADISH BABU" },
+    "2165": { "name": "KOKILA KAMARAJ", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "02-Jul-2024", "reviewer": "JAGADISH BABU" },
+    "2182": { "name": "ANANDHI DHEENEDHAYALAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "11-Jul-2024", "reviewer": "JAGADISH BABU" },
+    "2184": { "name": "REKHA P", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "17-Jul-2024", "reviewer": "JAGADISH BABU" },
+    "2206": { "name": "NISHA SIVAMANI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Aug-2024", "reviewer": "JAGADISH BABU" },
+    "2208": { "name": "KALPANA S", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Aug-2024", "reviewer": "JAGADISH BABU" },
+    "2211": { "name": "SARAVANAN SUNDAR", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Aug-2024", "reviewer": "JAGADISH BABU" },
+    "2227": { "name": "GAYATHRI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "24-Aug-2024", "reviewer": "JAGADISH BABU" },
+    "2282": { "name": "PRAVEEN GOVINDASAMI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Oct-2024", "reviewer": "JAGADISH BABU" },
+    "2286": { "name": "P PRATHIMA", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Oct-2024", "reviewer": "JAGADISH BABU" },
+    "2291": { "name": "THENMOZHI DEVENDRAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "22-Oct-2024", "reviewer": "JAGADISH BABU" },
+    "2292": { "name": "CHANRAKUMARI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "22-Oct-2024", "reviewer": "JAGADISH BABU" },
+    "2295": { "name": "PRIYADHARSHINI R", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Nov-2024", "reviewer": "JAGADISH BABU" },
+    "2299": { "name": "V MURUGESWARI", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "01-Nov-2024", "reviewer": "JAGADISH BABU" },
+    "2300": { "name": "SANJAI THIYAGARAJAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "11-Nov-2024", "reviewer": "JAGADISH BABU" },
+    "2301": { "name": "SINTHU", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "13-Nov-2024", "reviewer": "JAGADISH BABU" },
+    "2313": { "name": "NITHIA SREE SAYEE RAMAN", "paygroup": "PF", "classification": "Warehouse", "department": "Warehouse", "doj": "25-Nov-2024", "reviewer": "JAGADISH BABU" },
+    "VR05": { "name": "SUNIL", "paygroup": "Voucher", "classification": "Warehouse", "department": "Warehouse", "doj": "25-Apr-2023", "reviewer": "JAGADISH BABU" },
+    "VR40": { "name": "ANITHA", "paygroup": "Voucher", "classification": "Warehouse", "department": "Warehouse", "doj": "14-Sep-2024", "reviewer": "JAGADISH BABU" },
+    "VR41": { "name": "LATHA H", "paygroup": "Voucher", "classification": "Warehouse", "department": "Warehouse", "doj": "23-Sep-2024", "reviewer": "JAGADISH BABU" },
+    "VR42": { "name": "MUTHUMARI M", "paygroup": "Voucher", "classification": "Warehouse", "department": "Warehouse", "doj": "23-Sep-2024", "reviewer": "JAGADISH BABU" },
+    "VR46": { "name": "T SUNDARI", "paygroup": "Voucher", "classification": "Warehouse", "department": "Warehouse", "doj": "18-Sep-2024", "reviewer": "JAGADISH BABU" },
+    "VR48": { "name": "Vimala", "paygroup": "Voucher", "classification": "Warehouse", "department": "Warehouse", "doj": "15/10/2024", "reviewer": "JAGADISH BABU" },
+    "1081": { "name": "RAJA S", "paygroup": "PF", "classification": "Retail", "department": "West Mambalam", "doj": "01-Aug-2016", "reviewer": "SURESH" },
+    "1583": { "name": "ISRAVEL", "paygroup": "PF", "classification": "Retail", "department": "West Mambalam", "doj": "01-Jul-2022", "reviewer": "SURESH" },
+    "1867": { "name": "V.PRIYALAKSHMI", "paygroup": "PF", "classification": "Retail", "department": "West Mambalam", "doj": "11-Jun-2023", "reviewer": "SURESH" },
+    "1907": { "name": "PRADEEP M", "paygroup": "PF", "classification": "Retail", "department": "West Mambalam", "doj": "10-Aug-2023", "reviewer": "SURESH" },
+    "1940": { "name": "A SUBASHINI", "paygroup": "PF", "classification": "Retail", "department": "West Mambalam", "doj": "06-Oct-2023", "reviewer": "SURESH" },
+    "1994": { "name": "LAKSHMIPRIYA", "paygroup": "PF", "classification": "Retail", "department": "West Mambalam", "doj": "14-Dec-2023", "reviewer": "SURESH" },
+    "2103": { "name": "ARUN", "paygroup": "PF", "classification": "Retail", "department": "West Mambalam", "doj": "06-May-2024", "reviewer": "SURESH" },
+    "2106": { "name": "SASIKALA SIVAKUMAR", "paygroup": "PF", "classification": "Retail", "department": "West Mambalam", "doj": "01-May-2024", "reviewer": "SURESH" },
+    "2169": { "name": "JANANI.G", "paygroup": "PF", "classification": "Retail", "department": "West Mambalam", "doj": "25-Jun-2024", "reviewer": "SURESH" },
+    "2195": { "name": "MUKESH C", "paygroup": "PF", "classification": "Retail", "department": "West Mambalam", "doj": "21-Jul-2024", "reviewer": "SURESH" },
+    "2311": { "name": "SANGEETHA V", "paygroup": "PF", "classification": "Retail", "department": "WEST MAMBALAM", "doj": "14-Nov-2024", "reviewer": "SURESH" },
+    "2312": { "name": "RANJINI", "paygroup": "PF", "classification": "Retail", "department": "WEST MAMBALAM", "doj": "14-Nov-2024", "reviewer": "SURESH" },
+    "2315": { "name": "SANJAY SANKAR", "paygroup": "PF", "classification": "Retail", "department": "WEST MAMBALAM", "doj": "01-Nov-2024", "reviewer": "SURESH" },
+    "2044": { "name": "SURESH", "paygroup": "PF", "classification": "Retail", "department": "West Mambalam", "doj": "11-Mar-2024", "reviewer": "AMARGIRISH" },
+    "1657": { "name": "SAMUEL SAMPATH M", "paygroup": "Retainers", "classification": "Warehouse", "department": "WHOLESALE", "doj": "01-Apr-2022", "reviewer": "SURESH KUMAR S" },
+    "1042": { "name": "SURESH KUMAR S", "paygroup": "PF", "classification": "Warehouse", "department": "WHOLESALE", "doj": "01-Jun-2012", "reviewer": "RAMANARAYANAN" },
+    "1045": { "name": "RAJINI B", "paygroup": "PF", "classification": "Warehouse", "department": "Yantram", "doj": "02-Jul-2012", "reviewer": "BALASUBRAMANIAN S" },
+    "1117": { "name": "VEERAMANI C", "paygroup": "PF", "classification": "Warehouse", "department": "Yantram", "doj": "01-Apr-2018", "reviewer": "BALASUBRAMANIAN S" },
+    "1073": { "name": "BALASUBRAMANIAN S", "paygroup": "PF", "classification": "Warehouse", "department": "Yantram", "doj": "01-Sep-2015", "reviewer": "SHARADA PRAKASH" }
+};
+
+
+        let currentIndex = 0;
+
+        window.onload = function() {
+    showPopup(0); // Automatically open the popup for Performance Appraisal
+};
+
+
+        function showPopup(index) {
+            currentIndex = index;
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('popup').classList.add('active');
+        }
+
+        function submitCode() {
+            const code = document.getElementById('employeeCode').value.trim();
+            const details = employeeData[code];
+            const detailsContainer = document.getElementById(`employee-details-${currentIndex}`);
+
+            if (details) {
+                detailsContainer.innerHTML = `
+                    <p><strong>Name:</strong> ${details.name}</p>
+                    <p><strong>Paygroup:</strong> ${details.paygroup}</p>
+                    <p><strong>Classification:</strong> ${details.classification}</p>
+                    <p><strong>Department:</strong> ${details.department}</p>
+                    <p><strong>Date of Joining:</strong> ${details.doj}</p>
+                    <p><strong>Reviewer:</strong> ${details.reviewer}</p>
+                `;
+            } else {
+                detailsContainer.innerHTML = `<p>Employee code not found!</p>`;
+            }
+
+            closePopup();
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            document.getElementById(`content-${currentIndex}`).classList.add('active');
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('popup').classList.remove('active');
+        }
+    </script>
+
+
+</body>
+</html>
