@@ -881,29 +881,42 @@ h2 {
 
       <script>
         function forwardToAssessment() {
-          const code = document.getElementById('employeeCode').value.trim(); // Get the entered employee code
-          const details = employeeData[code]; // Fetch employee details
-      
-          if (details) {
-              const employeeDepartment = details.classification.toLowerCase(); // Get the classification (department)
-      
-              // Redirect based on department
-              if (employeeDepartment === 'office') {
-                  window.location.href = 'self_skill_assessment.html';
-              } else if (employeeDepartment === 'retail') {
-                  window.location.href = 'retail_shop_employees_assessment.html';
-              }else if (employeeDepartment === 'warehouse' || employeeDepartment === 'puja division') {
-                  window.location.href = 'warehouse_appraisal.html';
-              } else {
-                  alert('Invalid department or department not specified.');
-              }
-          } else {
-              alert('Please enter a valid employee code!');
-          }
-      }
-  
-      
-  </script>    
+            const code = document.getElementById('employeeCode').value.trim(); // Get the entered employee code
+            const details = employeeData[code]; // Fetch employee details
+    
+            // Define the exception list
+            const exceptionCodes = [
+                "1250", "1396", "1052", "1666", "1002", "1196", "1073", "1043", "1063", 
+                "1674", "1125", "1281", "1007", "1172", "1952", "1388", "1025", "1013", 
+                "1344", "1167", "1511", "1467", "1193", "1024", "1168", "2082", "2205", 
+                "1812", "1149", "1017", "1028", "1343", "1568", "1238", "1249", "1134", 
+                "1819", "2005", "2042", "1270", "1171", "1253", "2091", "1057", "1221", 
+                "2043", "2044", "1042", "1402", "1004", "1005", "1019", "1235", "2056", 
+                "1409", "1018"
+            ];
+    
+            if (exceptionCodes.includes(code)) {
+                // Redirect to self_skill_assessment.html if the code is in the exception list
+                window.location.href = 'self_skill_assessment.html';
+            } else if (details) {
+                const employeeDepartment = details.classification.toLowerCase(); // Get the classification (department)
+    
+                // Redirect based on department
+                if (employeeDepartment === 'office') {
+                    window.location.href = 'self_skill_assessment.html';
+                } else if (employeeDepartment === 'retail') {
+                    window.location.href = 'retail_shop_employees_assessment.html';
+                } else if (employeeDepartment === 'warehouse' || employeeDepartment === 'puja division') {
+                    window.location.href = 'warehouse_appraisal.html';
+                } else {
+                    alert('Invalid department or department not specified.');
+                }
+            } else {
+                alert('Please enter a valid employee code!');
+            }
+        }
+    </script>
+       
         
       
   </div>
