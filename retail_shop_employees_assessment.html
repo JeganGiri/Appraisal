@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retail_shop_employee_assessment
+  </title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #eafaf1; /* Light green background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background: #ffffff; /* White card background */
+      border: 1px solid #d4e8d6; /* Light green border */
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .container img {
+      display: block;
+      margin: 0 auto 20px;
+    }
+
+    h2 {
+      color: #2e7d32; /* Dark green color */
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #2e7d32; /* Dark green for labels */
+      margin-bottom: 8px;
+      display: block;
+      text-align: left;
+    }
+
+    select, input, textarea, button {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #c4d9c7;
+      background-color: #f9fcfa;
+      transition: all 0.3s ease-in-out;
+      box-sizing: border-box;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      border-color: #2e7d32;
+      outline: none;
+      box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
+    }
+
+    button {
+      background-color: #2e7d32; /* Green button */
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #1b5e20; /* Darker green on hover */
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+    }
+
+    .buttons {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        
+        .buttonn {
+            padding: 10px 30px;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #fff;
+            transition: 0.3s;
+        }
+
+        .buttonn:hover {
+            background-color: #2e7d32;
+            color: #fff;
+        }
+  </style>
+  
+
+</head>
+<body>
+
+  <!-- Branch and Employee Code Selection -->
+  <div class="container" id="branch-employee-container" style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 20px;">
+    <img src="images.png" alt="Giri Logo" style="width: 150px; margin-bottom: 20px;">
+
+    <h2 style="color: black;">Retail Shop Employees Assessment(TL,Managers,Incharges,Supervisors)</h2>
+    <h2>Choose Branch</h2>
+    <select id="branch-select" onchange="updateEmployeeCodes()">
+        <option value="" disabled selected>Select a branch</option>
+        <option value="Alwarthirunagar">Alwarthirunagar</option>
+        <option value="Annanagar East">Annanagar East</option>
+        <option value="Annanagar West">Annanagar West</option>
+        <option value="Chembur">Chembur</option>
+        <option value="Chrompet">Chrompet</option>
+        <option value="Coimbatore">Coimbatore</option>
+        <option value="Covai - II">Covai - II</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Dombivili">Dombivili</option>
+        <option value="Goregaon">Goregaon</option>
+        <option value="Hosur">Hosur</option>
+        <option value="Jayanagar">Jayanagar</option>
+        <option value="Kanchi Puram">Kanchi Puram</option>
+        <option value="Kanchipuram Old">Kanchipuram Old</option>
+        <option value="Karolbagh">Karolbagh</option>
+        <option value="Kumbakonam">Kumbakonam</option>
+        <option value="Madurai Wt">Madurai Wt</option>
+        <option value="Malkaj Giri">Malkaj Giri</option>
+        <option value="Malleswaram">Malleswaram</option>
+        <option value="Mangadu">Mangadu</option>
+        <option value="Mangadu Showroom">Mangadu Showroom</option>
+        <option value="Mantsr">Mantsr</option>
+        <option value="Matunga">Matunga</option>
+        <option value="Matunga Showroom">Matunga Showroom</option>
+        <option value="Mogappair">Mogappair</option>
+        <option value="Mulund">Mulund</option>
+        <option value="Mylapore">Mylapore</option>
+        <option value="Nanganallur">Nanganallur</option>
+        <option value="Nerul">Nerul</option>
+        <option value="New Delhi">New Delhi</option>
+        <option value="Pallikaranai">Pallikaranai</option>
+        <option value="Pondycs">Pondycs</option>
+        <option value="Salem">Salem</option>
+        <option value="Secunberabad">Secunberabad</option>
+        <option value="Tambaram">Tambaram</option>
+        <option value="Thiruvanmiyur">Thiruvanmiyur</option>
+        <option value="Trichy">Trichy</option>
+        <option value="West Mambalam">West Mambalam</option>
+      </select>
+      
+
+    <h2>Choose Employee Code</h2>
+    <select id="employee-code-select">
+      <option value="" disabled selected>Select an employee code</option>
+    </select>
+
+    <button onclick="proceedToForm()">Submit</button>
+  </div>
+
+  <!-- Appraisal Form -->
+  <div class="container hidden" id="appraisal-form-container">
+    <h2>Appraisal Form</h2>
+    <form id="appraisalForm">
+      <h2>Retail Shop Employee Assessment </h2>
+   
+      
+      <label for="employeeCode">Employee Code:</label>
+      <input type="text" id="employeeCodeField" placeholder="Enter Code" readonly>
+      
+      <label for="branchName">Branch Name:</label>
+      <input type="text" id="branchNameField" placeholder="Enter Branch Name" readonly>
+      
+      <label for="assessorName">Assessor Name:</label>
+      <input type="text" id="assessorName" placeholder="Enter Assessor Name" required>
+
+      <!-- Appraisal Questions -->
+      <label>5. Grooming, Safety, Fitness, Presentable:</label>
+      <select id="groomingSafetyFitness">
+        <option value="Not Selected">Select</option>
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+           <option value="5">😁 5 - Excellent</option>
+    <option value="Not Applicable">Not Applicable</option>
+      </select>
+
+      <label>6. Product & Process Adherence:</label>
+      <select id="productProcessAdherence">
+        <option value="Not Selected">Select</option>
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+           <option value="5">😁 5 - Excellent</option>
+    <option value="Not Applicable">Not Applicable</option>
+      </select>
+      <label>7. Selling Skills - Able to Convince Customers:</label>
+<select id="sellingSkills" name="sellingSkills">
+  <option value="Not Selected">Select</option>
+    <option value="1">😢 1 - Poor</option>
+    <option value="2">☹️ 2 - Fair</option>
+    <option value="3">😐 3 - Average</option>
+    <option value="4">😊 4 - Good</option>
+       <option value="5">😁 5 - Excellent</option>
+    <option value="Not Applicable">Not Applicable</option>
+</select>
+
+<label>8. Shares Responsibilities, Willing to Work Beyond Normal Call:</label>
+<select id="sharesResponsibilities" name="sharesResponsibilities">
+  <option value="Not Selected">Select</option>
+    <option value="1">😢 1 - Poor</option>
+    <option value="2">☹️ 2 - Fair</option>
+    <option value="3">😐 3 - Average</option>
+    <option value="4">😊 4 - Good</option>
+       <option value="5">😁 5 - Excellent</option>
+    <option value="Not Applicable">Not Applicable</option>
+</select>
+
+<label>9. Computer Literacy, Billing Accuracy, Stock Check Accuracy:</label>
+<select id="computerLiteracy" name="computerLiteracy">
+  <option value="Not Selected">Select</option>
+    <option value="1">😢 1 - Poor</option>
+    <option value="2">☹️ 2 - Fair</option>
+    <option value="3">😐 3 - Average</option>
+    <option value="4">😊 4 - Good</option>
+       <option value="5">😁 5 - Excellent</option>
+    <option value="Not Applicable">Not Applicable</option>
+</select>
+
+<label>10. Flexible, Supportive, and Communicative:</label>
+<select id="flexibilitySupport" name="flexibilitySupport">
+  <option value="Not Selected">Select</option>
+    <option value="1">😢 1 - Poor</option>
+    <option value="2">☹️ 2 - Fair</option>
+    <option value="3">😐 3 - Average</option>
+    <option value="4">😊 4 - Good</option>
+       <option value="5">😁 5 - Excellent</option>
+    <option value="Not Applicable">Not Applicable</option>
+  
+</select>
+
+      <!-- Add other questions as needed -->
+
+      <label>11. Additional Responsibilities:</label>
+      <textarea placeholder="Provide explanation..."></textarea>
+
+      <button type="submit">Submit Appraisal</button>
+    </form>
+  </div>
+
+  <script>
+  const branchEmployeeCodes = {
+    
+  "Alwarthirunagar": [
+    "1158-KAVITHA R",
+    "1200-SANTHOSHI",
+    "1205-SATHISH M",
+    "1339-THULASI.S",
+    "2194-SAIKUMAR RAJENDRAN",
+    "2196-ANANDH KAMALAKANTHAN",
+    "2256-SOWMIYA",
+    "2259-DHANALAKSHMI",
+    "2261-BHAVANI MURUGAN",
+    "2043-SURAJ"
+  ],
+  "Annanagar East": [
+    "1180-LAKSHMIPRIYA V",
+    "1182-RANJITH S",
+    "2024-SUNIL",
+    "2152-E DHANALAKSHMI",
+    "2174-MANI KANDAN.S",
+    "2175-SANGEETHA NAGARAJAN",
+    "2176-MURASOLIMARAN.M",
+    "2177-RAKSHITHA.K",
+    "2189-KIRUBAKARAN",
+    "2191-SATHISH KUMAR C",
+    "2193-SELVI.V",
+    "2198-HARIBASKAR.M",
+    "2217-PRABAVATHY M",
+    "2219-VIKRAM J",
+    "2238-VISHVA E",
+    "2239-RANJEETHA",
+    "2245-DHIVYADHARSHINI P",
+    "2247-SADHANA P",
+    "2249-DEVIKA",
+    "2251-UMARANI M",
+    "2260-HARI PRIYA",
+    "2277-RUKMANI",
+    "2279-ARUN EMMANUEL",
+    "2284-BABY SHALINI",
+    "2317-V MAHALAKSHMI",
+    "VR38-SABARI",
+    "VR53-NETHRA",
+    "1221-SRINIVASAN G"
+  ],
+  "Annanagar West": [
+    "1172-EZHILARASAN U",
+    "1493-GANESAN",
+    "1560-UMA MAGESWARI BALAKRISHNAN",
+    "1690-MANIMEGALAI",
+    "2288-ARASU RAMAN",
+    "2289-BHUVANEHWARI PRAKASAM"
+  ],
+  "Chembur": [
+    "1243-VINOLA MARY G",
+    "1245-PUSHPALATHA S",
+    "1655-Arokiamary",
+    "2294-VARUN KASIVISWANATHAN",
+    "1238-RAJA R"
+  ],
+  "Chrompet": [
+    "1664-KUTDRALESHWARAN NITHYAANDAN",
+    "1019-VAIDEESHWARAN V",
+    "1692-KAMALA KANTHA KUMAR D.R."
+  ],
+  "Coimbatore": [
+    "1103-SULOCHANA P",
+    "2093-NALINA ANUSHA",
+    "2302-M BALAMURUGAN"
+  ],
+  "Covai - II": [
+    "1016-SELVARANI K",
+    "1194-MALLIGA R",
+    "1597-NAGAMMAL JOHN",
+    "1628-MAGESWARI ARUMUGAM",
+    "1906-MOHANAPRIYA K",
+    "1909-SARASWATHI SUBRAMANIYAM",
+    "1819-SABARINATHAN ANNAMALAI"
+  ],
+
+  
+  "Delhi": ["1653-SUNI JENA"],
+  "Dombivili": [
+    "1234-RAJA IYER",
+    "1236-DHANALAKSHMI M",
+    "1246-MANISHA JAYANT BHINGARDE",
+    "2233-ARCHANA SWAPNIL CHIKANE"
+  ],
+  "Goregaon": [
+    "1694-SINTHANAI SELVA T",
+    "2303-K KAVITHA",
+    "2309-VALLARASU",
+    "1217-PRABHAKAR",
+    "1850-ARUN A",
+    "2268-EDWARD ALEXANDER STEPHEN STEPHEN",
+    "2269-MURALIDHARAN MARI YADAVA"
+  ],
+  "Hosur": [
+    "1898-ANBARASAN.E",
+    "1987-ARUNKUMAR MANIGANDAN",
+    "1193-KARTHIKEYAN S"
+  ],
+  "Jayanagar": [
+    "1348-SURIYALAKSHMI S",
+    "1714-POOJA.R",
+    "1760-KALE NEWAR",
+    "1780-MARVIN ALEX M",
+    "1810-MOHANKUMAR MURALI",
+    "1894-SADASHIVAN S",
+    "2225-VAISHNAVI S",
+    "2298-ARUNADEVI",
+    "1270-SATHISH A"
+  ],
+  "Kanchi Puram": [
+    "1055-MAHESWARI J",
+    "1905-BHAVANI PAZHANI",
+    "1134-RAVIKUMAR"
+  ],
+  "Kanchipuram Old": ["1645-LAKSHMI.K"],
+  "Karolbagh": [
+    "1577-MAHESH CHAND",
+    "1629-NEHA SHARMA",
+    "1755-MANSHI",
+    "2095-SANJAY PALANISAMY",
+    "1467-KARTHIKEYAN M MADHI"
+  ],
+  "Kumbakonam": [
+    "1979-VALANGOVAN GOVINDARAJAN",
+    "1981-VIGNESHWARAN EZHILAN",
+    "1982-GAYATHRI KARTHI",
+    "1986-JAGATHEESWARI MEIVEL",
+    "1991-HEMA.K",
+    "1992-SATHYA SANKAR",
+    "1024-KARUNAKARAN L"
+  ],
+  "Madurai Wt": [
+    "1033-JANAKIRAMAN K",
+    "1109-RENU",
+    "1802-MARIDOSS S",
+    "1002-ARUL BOOPATHI S"
+  ],
+  "Malkaj Giri": [
+    "1660-RANGAIAH E",
+    "1989-NAVEENKUMAR CHANDRAN",
+    "1990-PREMKUMAR SELVARAJ",
+    "2088-MURUGANANDHAM.G",
+    "2297-KUNDRU ANUSUYA",
+    "2306-CHINTHALA VINEETH",
+    "2310-BANDA VAMSHI"
+  ],
+  "Malleswaram": [
+    "1074-SRIDEVI M",
+    "1075-SHOBHA R",
+    "1161-MANJU H",
+    "2255-PRABU JAYAKUMAR",
+    "1402-SURESH KUMAR V"
+  ],
+  "Mangadu": [
+    "VR59-SANJANI S",
+    "1140-S KRIPAKARAN",
+    "2231-S P SANJAY",
+    "2304-SARANYA KANNAN"
+  ],
+  "Mantsr": [
+    "2017-SARATHKUMAR",
+    "2046-NADHINI SANTHANAMOORTHI"
+  ],
+  "Matunga": [
+    "1156-MANISHA RAJWAR",
+    "2270-AMEY VILAS PAGADE",
+    "2271-B GAYATHRI",
+    "2307-RAJU TIPANNA CHALVADI",
+    "2308-KALAIVANI LOGANATHAN",
+    "1131-LAKSHMAN YADAV",
+    "1155-MALARMANNAN P",
+    "1160-PUNASELVAM",
+    "1237-ANTHONY AMMAL",
+    "1239-ANITA UPENDRA BASANI",
+    "1241-VANITA ASHOK KUMAR",
+    "1242-RENUKA NARLA",
+    "1247-RAMESH NAWALE",
+    "1359-SANDEEP YASHWANT KADAM",
+    "1373-BHAGYALAKSHMI CHINNASAMY",
+    "1452-VELMURUGAN N",
+    "1701-SHANKAR THAKUR",
+    "1848-VIJAY KUMAR",
+    "1849-FATHIMA MARY KUMAR",
+    "1947-SONAL TIPANNA",
+    "1955-SADHANA VASANT SANKPAL",
+    "2064-VINAY KUMAR SURESH CHANDRA VAISHYA",
+    "2234-SAYALI KAILAS THORAT",
+    "2236-MADHAVAN",
+    "2290-THEVAR VANUMALAI PRABHAKARAN",
+    "2293-UTCHIMALI",
+    "VR57-SUJI",
+    "1235-VENKATESAN C"
+  ],
+  "Mogappair": [
+    "1049-SUGUNA E",
+    "1973-SURYA R",
+    "2042-SANKAR C"
+  ],
+  "Mulund": [
+    "1355-MAHADEVAN NARAYANA IYER",
+    "1357-MALATHI POOJARI",
+    "1843-LAKSHMANAN",
+    "1846-THIRUMALAI MARI",
+    "2147-SUJATA VASANT SAPKAL"
+  ],
+
+  
+  "Mylapore": [
+    "1001-VAIDHYANATHAN J",
+    "1003-BHUVANESWARI G",
+    "1026-SUDHA S",
+    "1029-LAKSHMI S",
+    "1041-SENTHILKUMAR A",
+    "1047-VIMALKUMAR N",
+    "1057-SRIDHAR R",
+    "1067-RAJKAMAL M",
+    "1070-HARIRAJ D",
+    "1071-SARAVANAN A",
+    "1072-BHAKYALAKSHMI",
+    "1083-RAMAKRISHNAN R",
+    "1102-KRISHNAKUMARI V",
+    "1112-MANI J",
+    "1121-KUMAR S",
+    "1122-USHA R",
+    "1136-VIJAYALAKSHMI",
+    "1137-RANJITHA S",
+    "1176-LAKSHMI R",
+    "1188-ANNAMALAI P",
+    "1191-SARAVANAN S",
+    "1229-SAKTHIVEL R",
+    "1256-VENKATESAN R",
+    "1259-SUJATHA K",
+    "1345-JAYANTHI.J",
+    "1395-MONISHA MOHANA SUNDARI D",
+    "1478-VASUKI R",
+    "1482-VIGNESH KUMAR B",
+    "1491-RAMYA S",
+    "1502-BHUVANESWARI G",
+    "1504-N SHALINI",
+    "1510-P SHYAMALA",
+    "1514-MAHESH KUMAR B",
+    "1599-PUNITHA M",
+    "1646-KRISHNA MOHAN P V",
+    "1648-SUBRAMANIA KUMAR",
+    "1649-JAYALAKSHMI S",
+    "1658-RAMESH",
+    "1659-MANGALAM",
+    "1662-VASUNDRA",
+    "1667-E SUGANYA",
+    "1744-C RAJA",
+    "1745-KRITHIVASAN R",
+    "1774-SANJU R",
+    "1875-SUJATHA P",
+    "1920-VINOTH",
+    "1971-VIJAY RAJA",
+    "2202-SRIDHAR KANDHASAMY",
+    "2224-SANGEETHA",
+    "2226-VISHAL PANDIYAN",
+    "2228-G LOGESHWARI",
+    "2232-KALAIVANI",
+    "2244-SURESH G",
+    "2246-BHAVANI C",
+    "2265-SOWNDARIYA R",
+    "2267-SATHYA J",
+    "2275-S INDRA BAI",
+    "2285-M VAIDYANATHAN",
+    "2296-VENKATESHWARA B",
+    "VR33-SOWMIYA.V",
+    "2070-SHANMUGARAJA"
+  ],
+  "Nanganallur": [
+    "1063-CHANDRASEKARAN K",
+    "1056-NIBHA KUMARI P",
+    "1513-K RAMESH",
+    "1736-P. J. BHAGAVATHY",
+    "2061-BHUVANESWARI MANI",
+    "2170-SUGANTHI.N NATARAJAN",
+    "2171-KAVIYA ELUMALAI"
+  ],
+  "Nerul": [
+    "1362-ANBU A",
+    "2235-VALLI SRINIVASAN",
+    "VR09-RANJANI RAJU"
+  ],
+  "New Delhi": [
+    "1640-TANIYA KUMARI",
+    "1641-MITHUNCHAKARAVATHI.S",
+    "1722-MAHENDRAN K",
+    "2078-CHANDRU MARIMUTHU",
+    "2213-VIJAY KUMAR",
+    "1171-SENTHILMURUGAN A"
+  ],
+  "Pallikaranai": [
+    "2264-M DOMINIC RABUNI",
+    "1068-VEERARAGHAVAN P R",
+    "1133-J KISHOREKUMAR",
+    "1368-KALYANAKUMAR T",
+    "1793-MAHALAKSHMI A",
+    "1794-AJITHKUMAR ANANDHAN",
+    "1795-VINITHA G",
+    "1796-S HEMAVATHY",
+    "1797-R.ALAMELU",
+    "1798-C.BALAJI",
+    "1806-MOHANRAJ CHANDRASEKAR",
+    "1815-ANNAPOORANI.A",
+    "1941-POORNIMA ARUMUGAM",
+    "1942-KALIYAMMAL KANAGARAJ",
+    "1008-USHA U",
+    "1812-MEERA MURALIKRISHNAN"
+  ],
+  "Pondycs": [
+    "1076-SRINIVASAN K",
+    "1393-SUBASHINI I",
+    "2013-K SHENBAGAM",
+    "1511-JEEVANPRASATH"
+  ],
+  "Salem": [
+    "1566-ARAVINDH R",
+    "2083-KRISHNAKUMAR JAYAGOPAL",
+    "2085-REKHA.V",
+    "2087-KARTHIKEYAN.M",
+    "2089-VINITHA.S",
+    "2316-VIJAYKUMAR SANTHANAM",
+    "2319-VIGNESH MURUGESAN",
+    "2091-SIVA SUBRAMANIAN"
+  ],
+  "Secunderabad": [
+    "1021-SUDHAKAR S",
+    "1044-MANASA B",
+    "1069-PODILI SANTHOSH",
+    "1263-JANIGA SURYAKALA",
+    "1497-KEMIDI SONY",
+    "2029-JANAGANI RAMA DEVI",
+    "VR66-PRABHA RAMANAN",
+    "1013-HARIBABU K",
+    "1661-SHARMA T V R"
+  ],
+  "Tambaram": [
+    "1089-VETRI SELVI G",
+    "1116-ANANTHI K",
+    "1183-ARCHANA K",
+    "1422-CHANDRASEKAR SUNDAR",
+    "1495-GOPINATH",
+    "1642-DIVYA.D",
+    "2186-JANANI.P",
+    "1952-G VENKATESH"
+  ],
+  "Thiruvanmiyur": [
+    "1065-JAYA R",
+    "1087-GANESAN P",
+    "1101-SARALA V",
+    "1369-REKHA K",
+    "1492-ANJALI A",
+    "2080-VISALATCHI T",
+    "2229-LAVANYA GURUSAMY"
+  ],
+  "Trichy": [
+    "1037-VENKATRAMAN V",
+    "1139-RAMESH NAGARAJAN",
+    "1872-ANANTHANAYAKI R",
+    "2220-ARUN R",
+    "1043-CHANDRAMOULI J"
+  ],
+  "West Mambalam": [
+    "1081-RAJA S",
+    "1583-ISRAVEL",
+    "1867-V.PRIYALAKSHMI",
+    "1907-PRADEEP M",
+    "1940-A SUBASHINI",
+    "1994-LAKSHMIPRIYA",
+    "2103-ARUN",
+    "2106-SASIKALA SIVAKUMAR",
+    "2169-JANANI.G",
+    "2195-MUKESH C",
+    "2311-SANGEETHA V",
+    "2312-RANJINI",
+    "2315-SANJAY SANKAR",
+    "2044-SURESH"
+  ]
+
+
+};
+function updateEmployeeCodes() {
+  const branch = document.getElementById("branch-select").value;
+  const employeeCodeSelect = document.getElementById("employee-code-select");
+  employeeCodeSelect.innerHTML = '<option value="" disabled selected>Select an employee code</option>';
+
+  if (branch && branchEmployeeCodes[branch]) {
+    branchEmployeeCodes[branch].forEach(code => {
+      const option = document.createElement("option");
+      option.value = code;
+      option.textContent = code;
+      employeeCodeSelect.appendChild(option);
+    });
+  }
+}
+
+function proceedToForm() {
+  const branch = document.getElementById("branch-select").value;
+  const employeeCode = document.getElementById("employee-code-select").value;
+
+  if (!branch || !employeeCode) {
+    alert("Please select both a branch and an employee code.");
+    return;
+  }
+
+  document.getElementById("branch-employee-container").style.display = "none";
+  document.getElementById("appraisal-form-container").style.display = "block";
+  document.getElementById("branchNameField").value = branch;
+  document.getElementById("employeeCodeField").value = employeeCode;
+}
+
+document.getElementById('appraisalForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const formData = new URLSearchParams();
+
+  formData.append('employeeCode', document.getElementById('employeeCodeField').value);
+  formData.append('branchName', document.getElementById('branchNameField').value);
+  formData.append('assessorName', document.getElementById('assessorName').value);
+  formData.append('groomingSafetyFitness', document.getElementById('groomingSafetyFitness').value);
+  formData.append('productProcessAdherence', document.getElementById('productProcessAdherence').value);
+  formData.append('sellingSkills', document.getElementById('sellingSkills').value);
+  formData.append('sharesResponsibilities', document.getElementById('sharesResponsibilities').value);
+  formData.append('computerLiteracy', document.getElementById('computerLiteracy').value);
+  formData.append('flexibilitySupport', document.getElementById('flexibilitySupport').value);
+  formData.append('additionalResponsibilities', document.querySelector('textarea').value);
+
+  fetch('https://script.google.com/macros/s/AKfycbxjWYYE7iAN3I1YuJGKVDMJ35rIucp-woZx9A06ciLSPxqWM-mie5E4GnH_T30JyaAP/exec', {
+    method: 'POST',
+    body: formData.toString(),
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        alert('Retail Shop Employee Assessment submitted successfully!');
+        document.getElementById("appraisalForm").reset();
+        document.getElementById("branch-employee-container").style.display = "flex";
+        document.getElementById("appraisal-form-container").style.display = "none";
+        document.getElementById("branch-select").value = "";
+        document.getElementById("employee-code-select").innerHTML = '<option value="" disabled selected>Select an employee code</option>';
+      } else {
+        alert('Error: ' + data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again.');
+    });
+});
+
+  </script>
+    <div class="buttons">
+      <a href="index.html" class="buttonn">Back</a>
+     
+      <a href="#" onclick="forwardToAssessment()" class="buttonn">Next</a>
+      <script>
+          function forwardToAssessment() {
+              // Redirect to behaviour_self_assessment.html
+              window.location.href = 'index.html';
+          }
+      </script>
+     
+  </div>
+</body>
+</html>
