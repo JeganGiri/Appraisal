@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self skill Assessment</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #C8F2D0, #90D8A3);
+            color: #333;
+            flex-direction: column; 
+            text-align: center;
+
+
+            a.button {
+            padding: 15px;
+            text-align: center;
+            color: #FFFFFF;
+            font-weight: bold;
+            font-size: 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #256A2E;
+            transition: all 0.3s ease-in-out;
+            letter-spacing: 1px;
+        }
+
+        a.button:last-child {
+            border-bottom: none;
+        }
+
+        a.button:hover {
+            background: #256A2E;
+            color: #FFD700;
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive styles for mobile view */
+        @media (max-width: 768px) {
+            a.button {
+                padding: 12px; /* Slightly smaller padding for mobile */
+                font-size: 14px; /* Smaller font size for better fit */
+                letter-spacing: 0.5px; /* Reduced letter-spacing */
+            }
+
+            a.button:hover {
+                transform: scale(1.03); /* Less scaling for touch devices */
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Softer shadow */
+            }
+        }
+
+     
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center-align items */
+    margin: 20px auto;
+    width: 100%;
+    max-width: 800px;
+    padding: 0 15px; /* Add padding for mobile */
+    box-sizing: border-box;
+    gap: 20px;
+}
+
+.column {
+    background: #2E8B40;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    flex: 1 1 calc(100% - 40px); /* Take full width on small screens */
+    box-sizing: border-box;
+    max-width: 100%;
+    text-align: center; /* Center-align buttons */
+}
+
+.column a.button {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #2E8B40;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px 0;
+    transition: background 0.3s ease;
+}
+
+.column a.button:hover {
+    background-color: #256a2e;
+}
+
+
+.buttons {
+    display: flex;
+    justify-content: center; /* Center buttons on mobile view */
+    gap: 10px; /* Add space between buttons */
+    padding: 10px;
+}
+
+.buttonn {
+    padding: 10px 20px;
+    color: #ffffff;
+    background-color: #2E8B40;
+    border: 2px solid #2E8B40;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    flex: 1 1 auto; /* Responsive button sizing */
+    max-width: 200px;
+}
+
+.buttonn:hover {
+    background-color: #256A2E;
+    color: #FFD700;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile-specific hover adjustments */
+@media (max-width: 768px) {
+    .buttonn:hover {
+        transform: scale(1.03); /* Slightly reduced scaling for touch devices */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Softer shadow for mobile */
+    }
+}
+
+@media (min-width: 769px) {
+    .buttons {
+        justify-content: space-between; /* Place buttons at left and right corners */
+        position: fixed;
+        bottom: 20px; /* Position buttons slightly above the bottom of the screen */
+        left: 20px;
+        right: 20px;
+        width: calc(100% - 40px); /* Ensure consistent spacing on both sides */
+    }
+
+    .buttonn {
+        max-width: 150px; /* Adjust button size for desktop */
+    }
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+h1 {
+    font-size: 1.8em;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0 15px; /* Padding for smaller screens */
+    color: #333;
+}
+
+.popup input,
+.popup select,
+.popup textarea {
+    width: calc(100% - 20px); /* Ensures no horizontal overflow */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.popup button {
+    padding: 10px 15px;
+    margin: 10px 5px;
+    border: none;
+    background: #2e8b40;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+    flex: 1 1 auto; /* Responsive button sizing */
+}
+
+.popup button:hover {
+    background: #256a2e;
+}
+
+/* Responsive Adjustments */
+@media (min-width: 768px) {
+    .column {
+        flex: 1 1 calc(50% - 40px); /* Two columns on medium screens */
+        max-width: calc(50% - 40px);
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .buttonn {
+        max-width: 150px;
+        font-size: 16px;
+    }
+}
+
+h2.responsive-text {
+            color: black;
+            font-size: 14px; /* Default size for larger screens */
+        }
+
+        @media (max-width: 768px) {
+            h2.responsive-text {
+                font-size: 10px; /* Smaller size for mobile screens */
+            }
+        }
+
+
+
+
+
+    /* Popup Container */
+    #popupContainer {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        padding: 15px;
+    }
+
+    /* Popup Form */
+    .popup {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        max-width: 800px;
+        overflow-y: auto;
+        max-height: 90vh;
+        box-sizing: border-box;
+    }
+
+    /* Form Styling */
+    #appraisalForm {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #000000;
+    }
+
+
+
+    input[type="text"]::placeholder {
+    font-size: 0.9rem;  /* Reduce font size */
+    text-align: center;  /* Optionally center the placeholder text */
+}
+
+input[type="text"] {
+    width: 100%;  /* Adjust this width value as needed to control input field size */
+    padding-left: 10px;  /* Padding to adjust where the placeholder text begins */
+}
+
+
+    option {
+        padding: 5px;
+    }
+
+    button[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        padding: 12px 20px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    .form-element {
+        margin-bottom: 20px;
+    }
+
+    .form-element:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Close Button (if needed) */
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        color: #333;
+    }
+
+    .close-button:hover {
+        color: #007bff;
+    }
+
+    label {
+        font-size: 1rem;
+        margin-bottom: 8px;
+        display: block;
+        color: #000000;
+        text-align: left; /* Left-align the labels */
+        margin-left: 10px; /* Add a small margin from the left */
+        font-weight: bold; /* Make the label text bold */
+    }
+/* Employee Name Placeholder Width */
+#employeeName::placeholder {
+    font-size: 0.9rem; /* Adjust font size of the placeholder */
+    text-align: center; /* Center-align the placeholder text */
+}
+
+/* Employee Code Placeholder Width */
+#employeeCodeDisplay::placeholder {
+    font-size: 0.9rem; /* Adjust font size of the placeholder */
+    text-align: center; /* Center-align the placeholder text */
+}
+
+/* Adjusting the Input Fields */
+#employeeName, #employeeCodeDisplay {
+    width: 40%; /* Adjust the width of the input fields */
+    padding-left: 10px; /* Add padding to adjust the start of the text */
+    margin-bottom: 15px; /* Space below the input fields */
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    <img src="images.png" alt="Giri Logo" style="width: 150px; margin-bottom: 20px;">
+
+    <div class="container">
+        
+      
+        <div class="column">
+            <h1 style="color: black;">Self Assessment</h1>
+          
+            <h2 class="responsive-text">(TL, Managers, Incharges, Supervisors)</h2>
+
+           
+            <a href="self_skill_assessment.html" class="button">SELF-SKILL ASSESSMENT</a>
+            <a href="behaviour_self_assessment.html" class="button">SELF-BEHAVIOUR ASSESSMENT</a>
+            <a href="reporting_manager_assessment.html" class="button">REPORTING MANAGER ASSESSMENT</a>
+        </div>
+    </div>
+
+
+    <!-- Popup Container -->
+    <div id="popupContainer">
+        <div class="popup">
+            <h2>Self Skill Appraisal Assessment</h2>
+            <h2>Enter Employee Code</h2>
+            <input type="text" id="employeeCodeInput" placeholder="Enter Code" />
+            <button onclick="checkEmployeeCode()">Submit</button>
+            <button onclick="closePopup()">Cancel</button>
+
+            <form id="appraisalForm" style="display: none;">
+               
+                <!-- Employee Information -->
+                <label for="employeeName"> Employee Name: <input type="text" id="employeeName" placeholder="Enter Name" required></label>
+              
+    
+                <label for="employeeCode"> Employee Code:  <input type="text" id="employeeCodeDisplay" placeholder="Enter Code" required></label>
+               
+
+                <h2>Self Skill Appraisal Assessment</h2>
+    <!-- Appraisal Questions with Ratings -->
+<label>1. Uses different Techniques and Approaches to meet the expectations of Customers/Team Requirements. (Rate 1-5):<br>
+    <select style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+        <option value="Not Selected" disabled selected>Select</option>
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+        <option value="5">😁 5 - Excellent</option>
+        <option value="Not Applicable">Not Applicable</option>
+    </select>
+</label>
+
+<label>2. Always customer-focused and thrives to exceed Customer Expectations. (Rate 1-5):<br>
+    <select style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+        <option value="Not Selected" disabled selected>Select</option>
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+        <option value="5">😁 5 - Excellent</option>
+        <option value="Not Applicable">Not Applicable</option>
+    </select>
+</label>
+
+<label>3. Computer Literacy / Analytical Skills - Knows the POS, Good in Analysing Data, Gives correct interpretation to data. (Rate 1-5):<br>
+    <select style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+        <option value="Not Selected" disabled selected>Select</option>
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+        <option value="5">😁 5 - Excellent</option>
+        <option value="Not Applicable">Not Applicable</option>
+    </select>
+</label>
+
+<label>4. Effectively organizes, coordinates, and completes assigned tasks. (Rate 1-5):<br>
+    <select style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+        <option value="Not Selected" disabled selected>Select</option>
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+        <option value="5">😁 5 - Excellent</option>
+        <option value="Not Applicable">Not Applicable</option>
+    </select>
+</label>
+
+<label>5. Handles customer queries and provides solutions. (Rate 1-5):<br>
+    <select style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+        <option value="Not Selected" disabled selected>Select</option>
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+        <option value="5">😁 5 - Excellent</option>
+        <option value="Not Applicable">Not Applicable</option>
+    </select>
+</label>
+
+<label>6. Responsible for team's performance - Leadership. (Rate 1-5):<br>
+    <select style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+        <option value="Not Selected" disabled selected>Select</option>
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+        <option value="5">😁 5 - Excellent</option>
+        <option value="Not Applicable">Not Applicable</option>
+    </select>
+</label>
+
+<label>7. Maintains proper records with accuracy. (Rate 1-5):<br>
+    <select style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+        <option value="Not Selected" disabled selected>Select</option>
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+        <option value="5">😁 5 - Excellent</option>
+        <option value="Not Applicable">Not Applicable</option>
+    </select>
+</label>
+
+<label>8. Follows laid-down procedures and escalates issues when necessary. (Rate 1-5):<br>
+    <select style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+        <option value="Not Selected" disabled selected>Select</option>
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+        <option value="5">😁 5 - Excellent</option>
+        <option value="Not Applicable">Not Applicable</option>
+    </select>
+</label>
+
+<label>9. Communication style - Language proficiency and comprehension. (Rate 1-5):<br>
+    <select style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+        <option value="Not Selected" disabled selected>Select</option>
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+        <option value="5">😁 5 - Excellent</option>
+        <option value="Not Applicable">Not Applicable</option>
+    </select>
+</label>
+
+<label>10. Fitness and Grooming - Takes care of oneself and maintains cleanliness. (Rate 1-5):<br>
+    <select style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+        <option value="Not Selected" disabled selected>Select</option>
+        <option value="1">😢 1 - Poor</option>
+        <option value="2">☹️ 2 - Fair</option>
+        <option value="3">😐 3 - Average</option>
+        <option value="4">😊 4 - Good</option>
+        <option value="5">😁 5 - Excellent</option>
+        <option value="Not Applicable">Not Applicable</option>
+    </select>
+</label>
+
+
+<label>11. Your Manager:<br>
+    <select style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required name="question11">
+        <option value="Not Selected" disabled selected>Select</option>  
+        <option value="☹️">☹️ </option>
+        <option value="😐">😐 </option>
+        <option value="😊">😊 </option>  
+    </select>
+</label>
+
+<!-- Submit Button -->
+<button type="submit">Submit Appraisal</button>
+
+        </div>
+    </div>
+    <script>
+        // Form validation function
+        function validateForm() {
+            const form = document.getElementById('appraisalForm');
+            const selects = form.querySelectorAll('select');
+            let allAnswered = true;
+    
+            // Loop through all select elements and check if any question is not answered
+            selects.forEach(function(select) {
+                console.log("Select Value:", select.value); // Debugging log
+                if (select.value === "Not Selected" || select.value === "") {
+                    allAnswered = false;
+                }
+            });
+    
+            if (!allAnswered) {
+                alert("Please answer all questions before submitting.");
+                return false; // Prevent form submission
+            }
+    
+            return true; // Allow form submission
+        }
+    
+        // Replace with your actual Google Apps Script Web App URL
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbwgum_qCzIX0wK-49xmzuf2qdF6op3e08NHRw4JyPyfwBihB7cvojQ9FNoJzvoyrnmP/exec'; 
+    
+        // Add an event listener to the form for submission
+        document.getElementById('appraisalForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission behavior
+    
+            // Validate the form before proceeding with submission
+            if (!validateForm()) {
+                return; // If validation fails, do not proceed with form submission
+            }
+    
+            // Create a new URLSearchParams object to hold form data
+            const formData = new URLSearchParams();
+            formData.append('employeeName', document.getElementById('employeeName').value.trim());
+            formData.append('employeeCode', document.getElementById('employeeCodeDisplay').value.trim());
+    
+            // Append all the select question values
+            document.querySelectorAll('select').forEach((select, index) => {
+                console.log(`Question ${index + 1} Value:`, select.value); // Debugging log
+                formData.append(`question${index + 1}`, select.value.trim());
+            });
+    
+            console.log("Form Data to Submit:", formData.toString()); // Debugging log
+    
+            // Make a POST request to the Google Apps Script Web App
+            fetch(scriptUrl, {
+                method: 'POST',
+                body: formData.toString(),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Server Response:", data); // Debugging log
+    
+                if (data.status === 'success') {
+                    alert('Self Skill Assessment submitted successfully. Continue Behaviour Assessment!');
+                    document.getElementById('appraisalForm').reset(); // Reset form after submission
+                    if (typeof closePopup === 'function') closePopup(); // Close popup after successful submission (if applicable)
+                } else {
+                    alert('Error: ' + (data.message || 'Unknown error occurred.'));
+                }
+            })
+            .catch(error => {
+                console.error('Submission Error:', error);
+                alert('Error submitting Self Skill Assessment. Please try again!');
+            });
+        });
+    </script>
+    
+    
+    
+    
+    <script>
+     const employeeData = {
+    "1250": "ABHISHEK PRAKASH",
+    "1396": "AMARGIRISH",
+    "1052": "AMIT JHA",
+    "1666": "ARJUN S",
+    "1002": "ARUL BOOPATHI S",
+    "1196": "ARUNKUMAR VENKATESAN",
+    "1073": "BALASUBRAMANIAN S",
+    "1043": "CHANDRAMOULI J",
+    "1063": "CHANDRASEKARAN K",
+    "1674": "CHITHIRAIKUMAR M",
+    "1125": "DEPPURI BHUVANA REDDY",
+    "1281": "E.BALA",
+    "1007": "ELLAPPAN",
+    "1172": "EZHILARASAN U",
+    "1952": "G VENKATESH",
+    "1388": "GANESH KUMAR",
+    "1025": "GAYATHRI S",
+    "1013": "HARIBABU K",
+    "1344": "JAGADISH BABU",
+    "1167": "JAYAN P",
+    "1511": "JEEVANPRASATH",
+    "1467": "KARTHIKEYAN M MADHI",
+    "1193": "KARTHIKEYAN S",
+    "1024": "KARUNAKARAN L",
+    "1168": "KIRTHIGA P",
+    "2082": "KRISHNAKUMAR K K",
+    "2205": "M.KARTHIKEYAN",
+    "1812": "MEERA MURALIKRISHNAN",
+    "1149": "NIRMALA B S",
+    "1017": "PADMAVATHY V",
+    "1028": "PALSAMY K",
+    "1343": "POOBALAN.R",
+    "1568": "PRIYANKA DESHMUKH",
+    "1238": "RAJA R",
+    "1249": "RAMANARAYANAN",
+    "1134": "RAVIKUMAR",
+    "1819": "SABARINATHAN ANNAMALAI",
+    "2005": "SAKTHIVEL NAGARAJ",
+    "2042": "SANKAR C",
+    "1270": "SATHISH A",
+    "1171": "SENTHILMURUGAN A",
+    "1253": "SHARADA PRAKASH",
+    "2091": "SIVA SUBRAMANIAN",
+    "1057": "SRIDHAR R",
+    "1221": "SRINIVASAN G",
+    "2043": "SURAJ",
+    "2044": "SURESH",
+    "1042": "SURESH KUMAR S",
+    "1402": "SURESH KUMAR V",
+    "1004": "T.S.RANGANATHAN",
+    "1005": "T.S.SRINIVASAN",
+    "1019": "VAIDEESHWARAN V",
+    "1235": "VENKATESAN C",
+    "2056": "VIGNESH R",
+    "1409": "VIGNESWAR D",
+    "1018": "VISWANATHAN S",
+    "1105": "ANURADHA P V",
+    "1119": "ESACKIDURAI NATARAJAN",
+    "1199": "P MUTHUMANIKANDAN",
+    "1323": "Ruthresh G",
+    "1415": "SATHISH R",
+    "1600": "MAGESWARAN.N",
+    "1932": "E SIVAGAMI",
+    "1983": "ABINAYA R",
+    "2030": "CHANDRA MOHAN N",
+    "2031": "ABEL ANDREW R",
+    "2166": "BHUVANESHWARAN.S",
+    "2281": "R DIVYA BHARATHI",
+    "1581": "ANTONY EZHILARASI",
+    "1107": "THANGARAJ S",
+    "2314": "V ABISHEK",
+    "1885": "NANTHINI THIRUMAL MURUGAN",
+    "1196": "ARUNKUMAR VENKATESAN",
+    "1682": "A L V MOORTHY",
+    "1399": "SUTHA M",
+    "1637": "KOKILA.T",
+    "2132": "KANISHKHA N",
+    "1666": "ARJUN S",
+    "1168": "KIRTHIGA P",
+    "1046": "VIJAYA BASKARAN R",
+    "1080": "SAKTHIVEL D",
+    "1110": "JAYASURIYA A",
+    "1114": "SATHISH S",
+    "1408": "KALAIARASI M",
+    "2050": "NISHA NEELAGANDAN",
+    "2130": "SWETHA R",
+    "2139": "ESWARI A",
+    "2181": "MANOJ",
+    "2199": "YOKESH S",
+    "1208": "DHAKSNA MOORTHY S",
+    "1476": "RANGANATHAN MANIVANNAN",
+    "1594": "NANDHAKUMAR M",
+    "1595": "BALAJI",
+    "1778": "YOGESHWARAN SANKAR",
+    "2011": "PRADEEP DURAI",
+    "2060": "DINESH T",
+    "2071": "SRIDHAR KATHIRVEL",
+    "2097": "JAYANTHI B",
+    "1565": "PRASANNA D",
+    "1613": "Sathiyanarayanan Saravanan",
+    "1765": "BHAVANMANI KARTHIGAI PRAKASH",
+    "1967": "SHIVANI",
+    "2025": "MERLIN ALBERT",
+    "2118": "AKASH R",
+    "2140": "PASUPATHI S",
+    "2054": "MITHRAN R",
+    "1858": "SUBASHINI DEVENDRAN",
+    "2069": "HARIHARAN V",
+    "2098": "RAGUPATHI R",
+    "1886": "PRIYADHARSHINI S",
+    "2021": "KAVIYARASAN",
+    "2241": "KEERTHANA KANTHAM S",
+    "VR44": "SAMUKTHA DEVI",
+    "VR50": "YUVARAJ",
+    "VR51": "VENNILA",
+    "1343": "POOBALAN.R",
+    "1674": "CHITHIRAIKUMAR M",
+    "2005": "SAKTHIVEL NAGARAJ",
+    "2056": "VIGNESH R",
+    "2205": "M.KARTHIKEYAN",
+    "2272": "VAISHNAVI",
+    "1059": "SUDHARSAN V",
+    "2305": "S PRAVINRAJ",
+    "2318": "DHIVAKARAN",
+    "1654": "RAVI M",
+    "1873": "S KATHIRVEL",
+    "1874": "KARTHICK C",
+    "1023": "MURUGAN N",
+    "1100": "CHELLADURAI M",
+    "1108": "ADITHYAN G",
+    "1170": "KANIKUMAR A",
+    "2160": "M SUBRAMANIAN",
+    "1685": "S SHALINI",
+    "1025": "GAYATHRI S",
+    "2240": "SHWETA ASHISH BAFNA",
+    "1060": "KALAISELVAN A",
+    "1165": "AARTHI PALANISAMY",
+    "1382": "PUGAZHENTHI I",
+    "1903": "JANANI B",
+    "2209": "HARSHINI MATHIVANAN",
+    "2210": "YASIN DEEN S",
+    "2116": "BALAJI RAJARAM",
+    "1012": "INDRA PRIYADARSINI",
+    "1014": "AMBIKA DEVI K P",
+    "1015": "GOVINDASAMY L",
+    "1571": "DEEPIKA V",
+    "2273": "AKSHAYA AMARNATH",
+    "1651": "Githarani K S",
+    "1656": "RAJI V",
+    "1018": "VISWANATHAN S",
+    "2117": "THAMIZHAMUTHU",
+    "1040": "MAHARAJA R",
+    "2033": "DINESH KUMAR"
+};
+
+
+        function checkEmployeeCode() {
+            const code = document.getElementById('employeeCodeInput').value.trim();
+            if (employeeData[code]) {
+                document.getElementById('employeeCodeDisplay').value = code;
+                document.getElementById('employeeName').value = employeeData[code];
+                document.getElementById('appraisalForm').style.display = 'block';
+                alert("Employee Code Validated.");
+            } else {
+                alert("Invalid Employee Code.");
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('popupContainer').style.display = 'none';
+            document.getElementById('appraisalForm').style.display = 'none';
+            document.getElementById('employeeCodeInput').value = "";
+            document.getElementById('employeeCodeDisplay').value = "";
+            document.getElementById('employeeName').value = "";
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                document.getElementById('popupContainer').style.display = 'flex';
+            }, 2000);
+        });
+
+       
+    </script>
+
+<div class="buttons">
+    <a href="index.html" class="buttonn">Back</a>
+    <a href="#" class="buttonn" id="nextButton">Continue to Behaviour Self Assessment</a>
+</div>
+
+ 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const nextButton = document.getElementById('nextButton');
+        
+        nextButton.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent default anchor behavior
+            // Navigate to the behaviour self-assessment page
+            window.location.href = 'behaviour_self_assessment.html';
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Appraisal</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #C8F2D0, #90D8A3); /* Gradient background */
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            flex-direction: column; 
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 400px;
+            gap: 20px;
+        }
+
+        .column {
+            background: #2E8B40; /* Dark green */
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            flex: 1;
+        }
+
+        a.button {
+            padding: 15px;
+            text-align: center;
+            color: #FFFFFF;
+            font-weight: bold;
+            font-size: 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #256A2E;
+            transition: all 0.3s ease-in-out;
+            letter-spacing: 1px;
+        }
+
+        a.button:last-child {
+            border-bottom: none;
+        }
+
+        a.button:hover {
+            background: #256A2E;
+            color: #FFD700;
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #popupContainer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .popup {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 1000px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        .popup h2 {
+            color: #2e8b40;
+            margin-bottom: 15px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .popup input, .popup select, .popup textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .popup button {
+            padding: 10px 15px;
+            margin: 10px 5px;
+            border: none;
+            background: #2e8b40;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .popup button:hover {
+            background: #256a2e;
+        }
+
+        #appraisalForm {
+            display: none;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #2E8B40;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+        }
+        .buttons {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        .buttonn {
+            padding: 10px 30px;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #fff;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .buttonn:hover {
+            background-color: #2e7d32;
+            color: #fff;
+        }
+
+        .buttonn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        label {
+        font-size: 1rem;
+        margin-bottom: 8px;
+        display: block;
+        color: #000000;
+        text-align: left; /* Left-align the labels */
+        margin-left: 10px; /* Add a small margin from the left */
+        font-weight: bold; /* Make the label text bold */
+    }
+
+
+
+
+    </style>
+</head>
+<body>
+    <img src="images.png" alt="Giri Logo" style="width: 150px; margin-bottom: 20px;">
+
+    <div class="container">
+        
+      
+        <div class="column">
+            <h2 style="color: black;">Warehouse Appraisal Assessment</h2>
+          
+           
+            <a href="performance_appraisal.html" class="button">PERFORMANCE APPRAISAL</a>
+          <a href="warehouse_appraisal.html" class="button">WAREHOUSE APPRAISAL</a>
+          <a href="retail_shop_employees_assessment.html" class="button">RETAIL SHOP EMPLOYEES ASSESSMENT</a>
+        </div>
+    </div>
+
+    <!-- Popup Container -->
+    <div id="popupContainer">
+        <div class="popup">
+            <h2 style="color: black;">Warehouse Appraisal Assessment</h2>
+            <h2>Enter Employee Code</h2>
+            <input type="text" id="employeeCodeInput" placeholder="Enter Code" />
+            <button onclick="checkEmployeeCode()">Submit</button>
+            <button onclick="closePopup()">Cancel</button>
+
+            <!-- Appraisal Form -->
+            <form id="appraisalForm">
+
+                <label for="employeeName" style="display: inline-block; margin-left: 20px; margin-right: 20px;">
+                    Employee Name:
+                    <input type="text" id="employeeName" placeholder="Enter Name" required>
+                </label>
+                
+                <label for="employeeCode" style="display: inline-block; margin-left: 20px;">
+                    Employee Code:
+                    <input type="text" id="employeeCode" readonly>
+                </label>
+                
+              
+                
+              
+                <h2 style="color: black;">Warehouse Appraisal Assessment</h2>
+
+ 
+
+                <label for="location">Location:</label>
+                <select id="location" required >
+                    <option value="">Select Location</option>
+                    <option>Main Warehouse</option>
+                    <option>Annex</option>
+                    <option>Repacking</option>
+                    <option>Kolupadi</option>
+                    <option>Despatch</option>
+                    <option>Export</option>
+                </select>
+        
+                <label for="inchargeName">Incharge Name:</label>
+                <input type="text" id="inchargeName" placeholder="Enter Incharge Name" required >
+        
+                <!-- Appraisal Questions -->
+                <label>1. Receiving (Counting Accuracy, Quality Checking, Damage Reporting, Updating):<br>
+                    <select  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+                        
+                        <option value="Not Selected" disabled selected>Select</option>
+                        <option value="1">😢 1 - Poor</option>
+                        <option value="2">☹️ 2 - Fair</option>
+                        <option value="3">😐 3 - Average</option>
+                        <option value="4">😊 4 - Good</option>
+                        <option value="5">😁 5 - Excellent</option>
+                        <option value="Not Applicable">Not Applicable</option>
+                    </select>
+                </label>
+        
+                <label>2. Communication (Inform Category, Inward Entry, EDP):<br>
+                    <select  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+                        
+                        <option value="Not Selected" disabled selected>Select</option>
+                        <option value="1">😢 1 - Poor</option>
+                        <option value="2">☹️ 2 - Fair</option>
+                        <option value="3">😐 3 - Average</option>
+                        <option value="4">😊 4 - Good</option>
+                        <option value="5">😁 5 - Excellent</option>
+                        <option value="Not Applicable">Not Applicable</option>
+                    </select>
+                </label>
+        
+                <label>3. Stacking (Update Bin-Card, Organise Shelf Space, Number Skills):<br>
+                    <select  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+                        
+                        <option value="Not Selected" disabled selected>Select</option>
+                        <option value="1">😢 1 - Poor</option>
+                        <option value="2">☹️ 2 - Fair</option>
+                        <option value="3">😐 3 - Average</option>
+                        <option value="4">😊 4 - Good</option>
+                        <option value="5">😁 5 - Excellent</option>
+                        <option value="Not Applicable">Not Applicable</option>
+                    </select>
+                </label>
+        
+                <label>4. Coordination (Teamwork, Accurate Info to Category Person):<br>
+                    <select  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+                        
+                        <option value="Not Selected" disabled selected>Select</option>
+                        <option value="1">😢 1 - Poor</option>
+                        <option value="2">☹️ 2 - Fair</option>
+                        <option value="3">😐 3 - Average</option>
+                        <option value="4">😊 4 - Good</option>
+                        <option value="5">😁 5 - Excellent</option>
+                        <option value="Not Applicable">Not Applicable</option>
+                    </select>
+                </label>
+        
+                <label>5. Ready for Higher Responsibilities (Category Incharge):<br>
+                    <select  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+                        
+                        <option value="Not Selected" disabled selected>Select</option>
+                        <option value="1">😢 1 - Poor</option>
+                        <option value="2">☹️ 2 - Fair</option>
+                        <option value="3">😐 3 - Average</option>
+                        <option value="4">😊 4 - Good</option>
+                        <option value="5">😁 5 - Excellent</option>
+                        <option value="Not Applicable">Not Applicable</option>
+                    </select>
+                </label>
+        
+                <label>6. Picking (Accuracy, Update Bin-Card, Provide Info):<br>
+                    <select  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+                        
+                        <option value="Not Selected" disabled selected>Select</option>
+                        <option value="1">😢 1 - Poor</option>
+                        <option value="2">☹️ 2 - Fair</option>
+                        <option value="3">😐 3 - Average</option>
+                        <option value="4">😊 4 - Good</option>
+                        <option value="5">😁 5 - Excellent</option>
+                        <option value="Not Applicable">Not Applicable</option>
+                    </select>
+                </label>
+        
+                <label>7. Multi-tasking (Handle Warehouse Operations):<br>
+                    <select  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+                        
+                        <option value="Not Selected" disabled selected>Select</option>
+                        <option value="1">😢 1 - Poor</option>
+                        <option value="2">☹️ 2 - Fair</option>
+                        <option value="3">😐 3 - Average</option>
+                        <option value="4">😊 4 - Good</option>
+                        <option value="5">😁 5 - Excellent</option>
+                        <option value="Not Applicable">Not Applicable</option>
+                    </select>
+                </label>
+        
+                <label>8. Maintain Records with Accurate Details:<br>
+                    <select  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+                        
+                        <option value="Not Selected" disabled selected>Select</option>
+                        <option value="1">😢 1 - Poor</option>
+                        <option value="2">☹️ 2 - Fair</option>
+                        <option value="3">😐 3 - Average</option>
+                        <option value="4">😊 4 - Good</option>
+                        <option value="5">😁 5 - Excellent</option>
+                        <option value="Not Applicable">Not Applicable</option>
+                    </select>
+                </label>
+        
+                <label>9. Computer Literacy (Work Independently in Systems):<br>
+                    <select  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+                        
+                        <option value="Not Selected" disabled selected>Select</option>
+                        <option value="1">😢 1 - Poor</option>
+                        <option value="2">☹️ 2 - Fair</option>
+                        <option value="3">😐 3 - Average</option>
+                        <option value="4">😊 4 - Good</option>
+                        <option value="5">😁 5 - Excellent</option>
+                        <option value="Not Applicable">Not Applicable</option>
+                    </select>
+                </label>
+        
+                <label>10. Grooming & Safety (Self-Discipline, Aware, Fit):<br>
+                    <select  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+                        
+                        <option value="Not Selected" disabled selected>Select</option>
+                        <option value="1">😢 1 - Poor</option>
+                        <option value="2">☹️ 2 - Fair</option>
+                        <option value="3">😐 3 - Average</option>
+                        <option value="4">😊 4 - Good</option>
+                        <option value="5">😁 5 - Excellent</option>
+                        <option value="Not Applicable">Not Applicable</option>
+                    </select>
+                </label>
+        
+                <label>11. Punctuality & Commitment to Work:<br>
+                    <select  style="width: 150px; padding: 5px; padding-left: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-sizing: border-box; text-align: left;" required>
+                        
+                        <option value="Not Selected" disabled selected>Select</option>
+                        <option value="1">😢 1 - Poor</option>
+                        <option value="2">☹️ 2 - Fair</option>
+                        <option value="3">😐 3 - Average</option>
+                        <option value="4">😊 4 - Good</option>
+                        <option value="5">😁 5 - Excellent</option>
+                        <option value="Not Applicable">Not Applicable</option>
+                    </select>
+                </label>
+        
+                <label>12. Can Be Promoted to Next Level (Achievements):</label>
+                <textarea rows="3" placeholder="Provide explanation..."></textarea>
+        
+                <button type="submit">Submit Appraisal</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('appraisalForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+    
+            // Collect form data
+            const formData = new URLSearchParams();
+            formData.append('employeeCode', document.getElementById('employeeCode').value);
+            formData.append('employeeName', document.getElementById('employeeName').value);
+            formData.append('location', document.getElementById('location').value);
+            formData.append('inchargeName', document.getElementById('inchargeName').value);
+    
+            // Collect appraisal questions dynamically
+            document.querySelectorAll('select').forEach((select, index) => {
+                formData.append(`question${index }`, select.value);
+            });
+    
+            formData.append('achievements', document.querySelector('textarea').value);
+    
+            // Submit the form data to the Google Apps Script Web App
+            fetch('https://script.google.com/macros/s/AKfycbwjWr7tAgns_3j3kFrXzoeFdvmCtRRF6GwcrpokjdaA1vqLwKF8iUqzCYAqFYLRhTQ/exec', {
+                method: 'POST',
+                body: formData.toString(),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Warehouse Assessment submitted successfully!');
+                        document.getElementById('appraisalForm').reset();
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while submitting the form. Please try again.');
+                });
+        });
+</script>
+    
+
+        
+    <script>
+     const employeeData = {
+    "1011": "KAMAL PREMNATH R",
+    "1061": "MUNEESWARAN K",
+    "1290": "KARTHICK. G",
+    "1671": "JEYALAKSHMI P R",
+    "1788": "N MOHAMED ARFITH",
+    "1929": "DILIP SRIKANTH",
+    "2262": "DANISH NAGARAJAN",
+    "1573": "EKAMBARAM DEVARAJ",
+    "1730": "RAMYA P",
+    "1961": "P. RAGINI",
+    "2242": "GNANAMBAL R",
+    "2243": "UMA MAGESHWARI ANANDHAN",
+    "2250": "SARANYA D",
+    "2252": "SEETHA M",
+    "1754": "T V RANGANATHAN",
+    "1082": "BHARATH J",
+    "1118": "VISALATCHI KAVASKAR",
+    "1184": "S ABDULLA",
+    "1113": "ELUMALAI R",
+    "1707": "JAGADEESH M",
+    "1735": "GOKULAKRISHNAN S",
+    "1839": "MOHAN E.K.",
+    "1062": "ANGEL A",
+    "1691": "VINAYAK K",
+    "1084": "SUMATHI M",
+    "1088": "RAVI G",
+    "1094": "PADMAVATHI U",
+    "1152": "SARGUNAM SHANKAR",
+    "1153": "BHARATH NAGALINGAM",
+    "1164": "GIRIJA R",
+    "1291": "PREMAJAISHANKAR",
+    "1294": "ANITHA.R",
+    "1303": "KALAIVANI",
+    "1331": "Ramkumar",
+    "1387": "VIJI S",
+    "1416": "THIRUMAL SUBRAMANIYAM",
+    "1888": "NEELAVENI JAYARAMAN",
+    "2150": "RAGUPATHY S",
+    "1053": "PREMA B",
+    "2034": "K KAMATCHI",
+    "1027": "RAJESHWARI V",
+    "1038": "SASIKUMAR K",
+    "1048": "PARTHASARATHY S",
+    "1030": "LAKSHMI DEVI U",
+    "1031": "KARTHIK S",
+    "1032": "MEENAKSHI S",
+    "1034": "KOTTI D",
+    "1066": "SRIDHAR S",
+    "1079": "VANITHA N",
+    "1093": "GEETHA R",
+    "1095": "SUTHA B",
+    "1096": "DEVI K",
+    "1099": "PADMA P",
+    "1132": "NAVALAN PANNEERSELVAM",
+    "1154": "VALLI M",
+    "1162": "SONIYA BALRAJ",
+    "1166": "SANDHIYA RAJESH",
+    "1174": "YOGINI M",
+    "1186": "CHITRA GOPU",
+    "1197": "MAHALAKSHMI S",
+    "1222": "SUSAI REGI ANITHA V",
+    "1282": "VIJAYAKUMARI EMROSE",
+    "1283": "DHANALAKSHMI.N",
+    "1287": "AMALA.I",
+    "1292": "VANITHA.S",
+    "1296": "ESAIVANI",
+    "1311": "KARTHICK SEKAR",
+    "1385": "VIMAL SUBRAMANI",
+    "1406": "MANIKANDAN S R",
+    "1407": "VIMAL MAGENDIRAN",
+    "1414": "MALATHY K",
+    "1449": "SASIKALA EKANATHAN",
+    "1450": "GANESH D",
+    "1462": "BHUVANESWARI M",
+    "1499": "RAJESHWARI P",
+    "1533": "CHANDADEVI M",
+    "1538": "SURIYAKALA KUMARAN",
+    "1539": "DEVI.D",
+    "1544": "MALARVIZHI.R",
+    "1557": "SARATHI PRABAGARAN",
+    "1575": "PRIYADARSHINI SURESH",
+    "1588": "DEEPIKA PRABAGARAN",
+    "1630": "RAJAKUMARI.B",
+    "1631": "ROSEE",
+    "1632": "GAYATHRI.K",
+    "1634": "PADMAVATHI.G",
+    "1670": "SHEEBASHALINI J",
+    "1695": "VEERAN VEERAPANDIYAN",
+    "1696": "SARANYA AGILAN",
+    "1697": "BAKKIYARAJ.E",
+    "1704": "SUBRAMANIAN RENGANATHAN",
+    "1708": "SARATHBABU",
+    "1737": "SIVAGAMI S",
+    "1739": "KALAIVANI PERUMAL",
+    "1741": "MALARVIZHI RUTHRASEGAR",
+    "1742": "NITIYA SARANRAJ",
+    "1752": "RADHIKA RATHINAM",
+    "1762": "PRAVEENA",
+    "1771": "BABU KESAVAN",
+    "1782": "R TEENADHARHINI",
+    "1792": "KARANKUMAR MURALI",
+    "1800": "BENINAMARY",
+    "1821": "R LAKSHMI",
+    "1823": "KRISHNAN MOORTHY",
+    "1825": "R CHITRA",
+    "1827": "PUGAZHARASU KUMAR",
+    "1828": "SARAVANAN SOMASUNDHARAM",
+    "1829": "SANGEETHA VENKATESAN",
+    "1852": "LATHA",
+    "1855": "S VASANTHI",
+    "1864": "GOKUL UMAPATHY",
+    "1880": "BHUVANESWARI SENGUTTUVAN",
+    "1882": "MANJULA KARTHIKEYAN",
+    "1883": "BALAMURUGAN RAMAMOORTHY",
+    "1896": "PRIYA K",
+    "1910": "S DEEPA",
+    "1928": "SURESHKUMAR NAGARATHINAM",
+    "1966": "VIZHIVENDHAN ANBALAGAN",
+    "1969": "RANJITHKUMAR A",
+    "1980": "VIGNESH K",
+    "1995": "MALLIGA SENGUTTUVAN",
+    "1996": "T SUNDARI",
+    "2012": "R APOORVA",
+    "2014": "UMA MAHESHWARI",
+    "2026": "PUNITHA GNANAPRAKASAM",
+    "2028": "SUDHA C",
+    "2032": "GOMATHI P",
+    "2035": "THIRUNAVUKKARASU MURUGESAN",
+    "2036": "AMALA P",
+    "2040": "PARAMESHWARI CHANDRASEKAR",
+    "2057": "K RENUKA",
+    "2076": "GOMATHI K",
+    "2079": "GOWTHAM SANJAY MOORTHY",
+    "2105": "SRI PRIYA K",
+    "2107": "DILLEESWARI M",
+    "2108": "CHITHAMBARAM THIRUPATHI",
+    "2112": "PONNI ARULJOTHI",
+    "2113": "M MANGALAKSHMI",
+    "2114": "SUMATHI V",
+    "2123": "DEVI RAMACHINDIRAN",
+    "2137": "V NIRANJAN",
+    "2149": "JEEVA K",
+    "2154": "KUMARAVEL S",
+    "2165": "KOKILA KAMARAJ",
+    "2182": "ANANDHI DHEENEDHAYALAN",
+    "2184": "REKHA P",
+    "2206": "NISHA SIVAMANI",
+    "2208": "KALPANA S",
+    "2211": "SARAVANAN SUNDAR",
+    "2227": "GAYATHRI",
+    "2282": "PRAVEEN GOVINDASAMI",
+    "2286": "P PRATHIMA",
+    "2291": "THENMOZHI DEVENDRAN",
+    "2292": "CHANRAKUMARI",
+    "2295": "PRIYADHARSHINI R",
+    "2299": "V MURUGESWARI",
+    "2300": "SANJAI THIYAGARAJAN",
+    "2301": "SINTHU",
+    "2313": "NITHIA SREE SAYEE RAMAN",
+    "VR05": "SUNIL",
+    "VR40": "ANITHA",
+    "VR41": "LATHA H",
+    "VR42": "MUTHUMARI M",
+    "VR46": "T SUNDARI",
+    "VR48": "VIMALA",
+    "1657": "SAMUEL SAMPATH M",
+    "1045": "RAJINI B",
+    "1117": "VEERAMANI C"
+};
+
+
+        function checkEmployeeCode() {
+            const code = document.getElementById('employeeCodeInput').value.trim();
+            if (employeeData[code]) {
+                document.getElementById('employeeCode').value = code;
+                document.getElementById('employeeName').value = employeeData[code];
+                document.getElementById('appraisalForm').style.display = 'block';
+                alert("Employee Code Validated.");
+            } else {
+                alert("Invalid Employee Code.");
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('popupContainer').style.display = 'none';
+            document.getElementById('appraisalForm').style.display = 'none';
+            document.getElementById('employeeCodeInput').value = "";
+            document.getElementById('employeeCode').value = "";
+            document.getElementById('employeeName').value = "";
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                document.getElementById('popupContainer').style.display = 'flex';
+            }, 2000);
+        });
+
+   // Handle Form Submission
+ document.getElementById('appraisalForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent actual form submission
+            
+            // Show Success Message
+            alert("Warehouse Appraisal Assessment Successfully Submitted!");
+            
+            // Optionally reset the form and close the popup
+            this.reset();
+            closePopup();
+        });
+    </script>
+     <div class="buttons">
+        <a href="index.html" class="buttonn">Back</a>
+       
+        <a href="#" onclick="forwardToAssessment()" class="buttonn">Next</a>
+        <script>
+            function forwardToAssessment() {
+                // Redirect to behaviour_self_assessment.html
+                window.location.href = 'index.html';
+            }
+        </script>
+</body>
+</html>
