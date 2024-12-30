@@ -387,52 +387,111 @@
                 </label>
         
                 <label>12. Can Be Promoted to Next Level (Achievements):</label>
-                <textarea rows="3" placeholder="Provide explanation..."></textarea>
+                <textarea name="achievements" rows="3" placeholder="Provide explanation..."></textarea>
+                
         
                 <button type="submit">Submit Appraisal</button>
             </form>
         </div>
     </div>
-
     <script>
-        document.getElementById('appraisalForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-    
-            // Collect form data
-            const formData = new URLSearchParams();
-            formData.append('employeeCode', document.getElementById('employeeCode').value);
-            formData.append('employeeName', document.getElementById('employeeName').value);
-            formData.append('location', document.getElementById('location').value);
-            formData.append('inchargeName', document.getElementById('inchargeName').value);
-    
-            // Collect appraisal questions dynamically
-            document.querySelectorAll('select').forEach((select, index) => {
-                formData.append(`question${index }`, select.value);
+        // Form validation function
+        function validateForm() {
+            const form = document.getElementById('appraisalForm');
+            const selects = form.querySelectorAll('select');
+            const textareas = form.querySelectorAll('textarea');
+            let allAnswered = true;
+        
+            // Loop through all select elements and check if any question is not answered
+            selects.forEach(function(select) {
+                console.log("Select Value:", select.value); // Debugging log
+                if (select.value === "Not Selected" || select.value === "") {
+                    allAnswered = false;
+                }
+            });
+            
+            // Loop through all textarea elements and check if any textarea is empty
+            textareas.forEach(function(textarea) {
+                console.log("Textarea Value:", textarea.value); // Debugging log
+                if (textarea.value.trim() === "") { // Check if textarea is empty
+                    allAnswered = false;
+                }
             });
     
-            formData.append('achievements', document.querySelector('textarea').value);
+            // If any select or textarea field is not answered, show an alert and prevent form submission
+            if (!allAnswered) {
+                alert("Please answer all questions before submitting.");
+                return false; // Prevent form submission
+            }
+        
+            return true; // Allow form submission if all questions are answered
+        }
+        
+        // Replace with your actual Google Apps Script Web App URL
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbwjWr7tAgns_3j3kFrXzoeFdvmCtRRF6GwcrpokjdaA1vqLwKF8iUqzCYAqFYLRhTQ/exec'; 
+        
+        // Add an event listener for form submission
+        document.getElementById('appraisalForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submission behavior
+        
+            // Validate the form before proceeding with submission
+            if (!validateForm()) {
+                return; // If validation fails, do not proceed with form submission
+            }
+        
+            // Create a new URLSearchParams object to hold form data
+            const formData = new URLSearchParams();
+            formData.append('employeeCode', document.getElementById('employeeCode').value.trim());
+            formData.append('employeeName', document.getElementById('employeeName').value.trim());
+            formData.append('location', document.getElementById('location').value.trim());
+            formData.append('inchargeName', document.getElementById('inchargeName').value.trim());
+        
+            // Append all the select question values
+            document.querySelectorAll('select').forEach((select, index) => {
+                console.log(`Question ${index + 1} Value:`, select.value); // Debugging log
+                formData.append(`question${index + 1}`, select.value.trim());
+            });
     
-            // Submit the form data to the Google Apps Script Web App
-            fetch('https://script.google.com/macros/s/AKfycbwjWr7tAgns_3j3kFrXzoeFdvmCtRRF6GwcrpokjdaA1vqLwKF8iUqzCYAqFYLRhTQ/exec', {
+            // Append all the textarea question values
+            document.querySelectorAll('textarea').forEach((textarea, index) => {
+                console.log(`Textarea ${index + 1} Value:`, textarea.value); // Debugging log
+                formData.append(`questionText${index + 1}`, textarea.value.trim());
+            });
+            
+            // Ensure the achievements field is included
+            const achievements = document.querySelector('textarea[name="achievements"]');
+            if (achievements) {
+                formData.append('achievements', achievements.value.trim());
+            }
+    
+            console.log("Form Data to Submit:", formData.toString()); // Debugging log
+        
+            // Make a POST request to the Google Apps Script Web App
+            fetch(scriptUrl, {
                 method: 'POST',
                 body: formData.toString(),
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        alert('Warehouse Assessment submitted successfully!');
-                        document.getElementById('appraisalForm').reset();
-                    } else {
-                        alert('Error: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while submitting the form. Please try again.');
-                });
+            .then(response => {
+                return response.json(); // Convert response to JSON
+            })
+            .then(data => {
+                console.log("Response from server:", data); // Debugging log
+                if (data.status === 'success') {
+                    alert('Warehouse Appraisal Form submitted successfully!');
+                    document.getElementById('appraisalForm').reset(); 
+                    document.getElementById('appraisalForm').reset(); // Reset form after submission
+                    closePopup();// Reset form after successful submission
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Submission Error:', error);
+                alert('Error submitting the form. Please try again!');
+            });
         });
-</script>
+    </script>
     
 
         
@@ -635,17 +694,7 @@
             }, 2000);
         });
 
-   // Handle Form Submission
- document.getElementById('appraisalForm').addEventListener('submit', function (e) {
-            e.preventDefault(); // Prevent actual form submission
-            
-            // Show Success Message
-            alert("Warehouse Appraisal Assessment Successfully Submitted!");
-            
-            // Optionally reset the form and close the popup
-            this.reset();
-            closePopup();
-        });
+  
     </script>
      <div class="buttons">
         <a href="index.html" class="buttonn">Back</a>
